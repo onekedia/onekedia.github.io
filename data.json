@@ -1,0 +1,134 @@
+[
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "703724",
+    "meNavMtd": "-3.56",
+    "monthEndDate": "2015-01-31 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "-2.28",
+    "returnMonth": 1,
+    "returnYear": 2015
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "669293",
+    "meNavMtd": "9.03",
+    "monthEndDate": "2015-02-28 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "7.20",
+    "returnMonth": 2,
+    "returnYear": 2015
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "651712",
+    "meNavMtd": "1.09",
+    "monthEndDate": "2015-03-31 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "1.80",
+    "returnMonth": 3,
+    "returnYear": 2015
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "617281",
+    "meNavMtd": "-2.90",
+    "monthEndDate": "2015-04-30 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "-2.94",
+    "returnMonth": 4,
+    "returnYear": 2015
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "599700",
+    "meNavMtd": "2.60",
+    "monthEndDate": "2015-05-31 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "3.67",
+    "returnMonth": 5,
+    "returnYear": 2015
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "384964",
+    "meNavMtd": "-8.86",
+    "monthEndDate": "2016-01-31 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "-10.83",
+    "returnMonth": 1,
+    "returnYear": 2016
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "348101",
+    "meNavMtd": "-2.83",
+    "monthEndDate": "2016-02-29 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "-0.71",
+    "returnMonth": 2,
+    "returnYear": 2016
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "329912",
+    "meNavMtd": "7.47",
+    "monthEndDate": "2016-03-31 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "7.66",
+    "returnMonth": 3,
+    "returnYear": 2016
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "292389",
+    "meNavMtd": "0.54",
+    "monthEndDate": "2016-04-30 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "1.00",
+    "returnMonth": 4,
+    "returnYear": 2016
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "274200",
+    "meNavMtd": "2.25",
+    "monthEndDate": "2016-05-31 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "2.69",
+    "returnMonth": 5,
+    "returnYear": 2016
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "45976",
+    "meNavMtd": "2.62",
+    "monthEndDate": "2017-01-31 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "1.62",
+    "returnMonth": 1,
+    "returnYear": 2017
+  },
+  {
+    "cusip": "543487854",
+    "fundName": "Loomis Sayles Small Cap Growth Instl",
+    "id": "7185",
+    "meNavMtd": "3.67",
+    "monthEndDate": "2017-02-28 00:00:00.0",
+    "morningstarSecId": "XIUSA000KQ",
+    "returnMTD_me": "2.45",
+    "returnMonth": 2,
+    "returnYear": 2017
+  }
+]
