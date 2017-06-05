@@ -4,7 +4,9 @@ $(function(){
 	var fund_value = 10000;
 	var benchmark_value = 9000;
 	$('#loading-image').show();
-	$.getJSON('data.json',function(data){
+	var path1 = 'data.json'
+	var path2 = "http://cmsapbosv01:8180/search/service/growth10k/history/543487854?monthStart=1&monthEnd=5&yearStart=2015&yearEnd=2017"
+	$.getJSON(path2,function(data){
 		// set date available
 		date_available = Highcharts.dateFormat('%b %d, %Y', new Date(Date.parse(data[0]['monthEndDate'])));
 		$('.fund-start-date').html(date_available);
