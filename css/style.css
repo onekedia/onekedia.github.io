@@ -1,6 +1,8 @@
 body, *{
 	margin:0;
 	padding: 0;
+	font-size: 12px;
+	font-weight: lighter;
 }
 .highcharts-credits{
 	display: none;
@@ -10,6 +12,10 @@ body, *{
 }
 .chart > div{
 	text-align: right;
+}
+.fund-start-date{
+	font-weight: bold;
+	font-size: 14px;
 }
 .chart-nav,#container {
 	min-width: 310px;
@@ -24,21 +30,36 @@ body, *{
 	padding-left: 10px;
 }
 .fund{
-	width: 23%;
+	width: 12%;
+    text-align: left;
 }
 .date{
 	width: 74%;
 }
 
-.oakmark::before{
+.oakmark{
 	/*content: 'Oakmark Fund';*/
     width: 10px;
     border-radius: 25px;
-    background: #ef00ff;
+    background: #7a4684;
     height: 10px;
     border-width: 2px;
-    border-color: #902b8d;
+    border-color: #7a4684;
     border-style: solid;
+    display: inline-block;
+    margin-right: 10px;
+}
+.benchmark{
+	/*content: 'Oakmark Fund';*/
+    width: 10px;
+    border-radius: 25px;
+    background: #9dc6e0;
+    height: 10px;
+    border-width: 2px;
+    border-color: #6faadb;
+    border-style: solid;
+    display: inline-block;
+    margin-right: 10px;
 }
 select{
 	width: 60px;

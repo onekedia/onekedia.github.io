@@ -20,12 +20,28 @@ $(function(){
 			benchmark_data.push(new Array(Date.parse(year['monthEndDate']), benchmark_value));
 			year_array.push(year['returnYear']);
 		});
-		console.log(year_array);
-		year_array.filter((v, i, a) => a.indexOf(v) === i);
-		for (year in year_array) {
-			console.log(year);
+		Array.prototype.contains = function(v) {
+		    for(var i = 0; i < this.length; i++) {
+		        if(this[i] === v) return true;
+		    }
+		    return false;
 		};
-		// $('.data').html(fund_data);
+		Array.prototype.unique = function() {
+		    var arr = [];
+		    for(var i = 0; i < this.length; i++) {
+		        if(!arr.contains(this[i])) {
+		            arr.push(this[i]);
+		        }
+		    }
+		    return arr; 
+		}
+		year_array = year_array.unique();
+		i = 1;
+		for (i = 0; i < year_array.length; i+=1 ){
+			$('#start-year').append("<option value=" + year_array[i] + ">" + year_array[i] + "</option>")
+			$('#end-year').append("<option value=" + year_array[i] + ">" + year_array[i] + "</option>")
+		}
+		// Highchart Function
 		Highcharts.stockChart('container', {
 			exporting: { enabled: false },
 			width: 1000,
@@ -122,11 +138,9 @@ $(function(){
 			]
 		});
 	}).error(function(){
-		console.log('error');
 	}).complete(function(){
 		$('#loading-image').hide();
 		$('.chart').show();
 	})
 	;
-	console.log(fund_data, benchmark_data);
 });
