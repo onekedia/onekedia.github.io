@@ -250,3 +250,122 @@
 
 // // Apply the theme
 // Highcharts.setOptions(Highcharts.theme);
+
+// // Highchart Function
+		// Highcharts.stockChart('container', {
+		// 	exporting: { enabled: false },
+		// 	width: 1000,
+		// 	labels: {
+		// 	    align: 'left',
+		// 	    x: 0,
+		// 	    y: 0
+		// 	},
+		// 	scrollbar: {
+  //           	enabled: false
+  //       	},
+		// 	rangeSelector: {
+		// 		selected: 5,
+		// 		inputEnabled: false,
+		// 		buttonTheme: {
+		// 			visibility: 'hidden'
+		// 		},
+		// 		labelStyle: {
+		// 			visibility: 'hidden'
+		// 		}
+		// 	},
+		// 	tooltip: {
+		// 	    backgroundColor: '#FCFFC5',
+		// 	    borderColor: 'transparent',
+		// 	    borderRadius: 500,
+		// 	    borderWidth: 1,
+		// 	    useHTML: true,
+  //               formatter: function() {
+  //                       return "<div class='custom-tooltip'> <span> $"+ this.y + "</span></br>" + Highcharts.dateFormat('%b %d, %Y', this.x)
+  //                       	+ "</div>"
+  //               }
+  //           },
+		// 	yAxis: {
+		// 		min: 9000,
+		// 		max: 15000,
+		// 		opposite: false,
+		// 		labels: {
+		// 			formatter: function(){
+		// 				return "$" + ((this.value)/1000).toString() + ',000';
+		// 			}
+		// 		}
+		// 	},
+		// 	xAxis: {
+		// 		min: new Date('2015/1/22').getTime(),
+		// 		max: new Date('2017/5/22').getTime(),
+		// 	},
+		// 	colors: ['#7cb5ec', '#434348', '#90ed7d', '#f7a35c', '#8085e9', 
+		// 		'#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'],
+		// 	series: [
+		// 		{
+		// 			name: 'OakMark Fund',
+		// 			data: fund_data,
+		// 			color: "#7a4684",
+		// 			type: 'area',
+		// 			fillColor: {
+		// 				linearGradient: {
+		// 					x1: 2,
+		// 					y1: 0,
+		// 					x2: 0,
+		// 					y2: 1
+		// 				},
+		// 				stops: [
+		// 					[0, '#c797d8'],
+		// 					[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+		// 				]
+		// 			},
+		// 			marker: {
+  //                   	fillColor: '#7a4684'
+  //               	},
+  //               	showInNavigator: true
+		// 		}, 
+		// 		{
+		// 			name: 'Benchmark',
+		// 			data: benchmark_data,
+		// 			color: "#6faadb",
+		// 			type: 'area',
+		// 			fillColor: {
+		// 				linearGradient: {
+		// 					x1: 0,
+		// 					y1: 0,
+		// 					x2: 0,
+		// 					y2: 0
+		// 				},
+		// 				stops: [
+		// 					[0, '#9dc6e0'],
+		// 					[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+		// 				]
+		// 			},
+		// 			marker: {
+  //                   	fillColor: '#6faadb'
+  //               	},
+  //               	showInNavigator: true
+		// 		}
+		// 	]
+		// });
+
+			// tooltip: {
+			    // backgroundColor: '#FCFFC5',
+			    // borderColor: 'transparent',
+			    // borderRadius: 500,
+			    // borderWidth: 1,
+			    // useHTML: true,
+		       //          formatter: function() {
+		       //                  return "<div class='custom-tooltip'> <span> $"+ this.y + "</span></br>" + Highcharts.dateFormat('%b %d, %Y', this.x)
+		       //                  	+ "</div>"
+		       //          }
+       			// backgroundColor: null,
+		        // borderWidth: 0,
+		        // shadow: false,
+		        // useHTML: true,
+		        // style: {
+		        //     padding: 0
+		        // },
+		        // formatter: function() {
+		        //     return '<b class="head">$' + ((this.y)/1000).toFixed().toString() + ',' + ((this.y)%1000).toString() + '</b> <br>' + Highcharts.dateFormat('%b %d, %Y', this.x);
+		        // }
+          //   },
