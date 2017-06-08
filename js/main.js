@@ -20,7 +20,7 @@ $(function(){
 		'yearStart': yearStart,
 		'yearEnd': yearEnd
 	}
-	path = getQueryPath(cuspip,monthStart,monthEnd,yearStart,yearEnd);
+	path = getQueryPath(options);
 	$('#start-month,#start-year,#end-month,#end-year').on('change', function(){
 		$.each($('#start-month,#start-year,#end-month,#end-year'),function(i,elem){
 			options[elem.name] = elem.value;
