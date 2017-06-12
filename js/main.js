@@ -21,6 +21,8 @@ $(function(){
 		'yearEnd': yearEnd
 	}
 	path = getQueryPath(options);
+	$('#end-month').val(monthEnd);
+
 	$('#start-month,#start-year,#end-month,#end-year').on('change', function(){
 		$.each($('#start-month,#start-year,#end-month,#end-year'),function(i,elem){
 			options[elem.name] = elem.value;
@@ -46,7 +48,7 @@ $(function(){
 			var fund_data = new Array();
 			var	benchmark_data = new Array();
 			var fund_value = 10000;
-			var benchmark_value = 9000;
+			var benchmark_value = 10000;
 			$.each(data,function(i,year){
 				c_month_fund = year['meNavMtd']* 100;
 				fund_value = fund_value + c_month_fund;
@@ -60,7 +62,6 @@ $(function(){
 			if (setYear){
 				populateYear(year_array);
 				setYear = false;
-
 				$('#end-year').val(year_array[year_array.length -1]);
 			}
 			highchart(fund_data,benchmark_data);
@@ -140,19 +141,54 @@ $(function(){
 		            padding: 0
 		        },
 		        formatter: function() {
-		            return '<b class="head">$' + ((this.y)/1000).toFixed().toString() + ',' + ((this.y)%1000).toString() + '</b> <br>' + Highcharts.dateFormat('%b %d, %Y', this.x);
+		        	// console.log(this);
+		        	// if(this.series.name == 'OakMark Fund'){
+           //        		return false ;
+           //      	}else {
+			            return '<b class="head">$' + ((this.y)/1000).toFixed().toString() + ',' + ((this.y)%1000).toString() + '</b> <br>' + Highcharts.dateFormat('%b %d, %Y', this.x);
+			        // }
 		        }
             },
-			yAxis: {
-				min: 9000,
-				max: 15000,
+			yAxis: [{
+				min: 0,
+				max: 50000,
 				opposite: false,
 				labels: {
 					formatter: function(){
 						return "$" + ((this.value)/1000).toString() + ',000';
 					}
 				}
-			},
+			},{
+		        linkedTo: 0,
+		        opposite: true,
+		        tickPositioner: function(min,max){
+		            var data = this.chart.yAxis[0].series[0].processedYData;
+		            //last point
+		            return [data[data.length-1]];
+		        },
+		        labels: {
+		        		useHTML: true,
+		                formatter: function () {
+		                	return '<span style="color:gray;">Ending Value: </span><br/><b>'+"$"+((this.value)/1000).toFixed().toString() + ',' + ((this.value)%1000).toString() +'</b>'
+		                }
+		        }
+		    },
+		    {
+		        linkedTo: 1,
+		        opposite: true,
+		        tickPositioner: function(min,max){
+		            var data = this.chart.yAxis[0].series[1].processedYData;
+		            //last point
+		            return [data[data.length-1]];
+		        },
+		        labels: {
+		                formatter: function () {
+		                	return '<span style="color:gray;">Ending Value: </span><br/><b>'+"$"+((this.value)/1000).toFixed().toString() + ',' + ((this.value)%1000).toString() +'</b>'
+		                }
+		        }
+		    }
+
+			],
 			xAxis: {
 				min: new Date('2015/1/22').getTime(),
 				max: new Date('2017/5/22').getTime(),
