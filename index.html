@@ -9,116 +9,79 @@
 		<div id="loading-image">
             <img src="loading.gif">      
         </div>
-        <div class="chart">
-            <div class="chart-nav">
-                <div class="details fund">
-                    <div class="oakmark"></div>Oakmark Fund
-                    <div class="benchmark"></div>Benchmark Fund
-                </div>
+        <div class="container">
+            <div class="row">
                 <div class="details date">
                     <div class="available">
-                        Date Available from
-                        <strong><div class="fund-start-date"></div></strong>
+                        <div>Date Available from</div>
+                        <!-- <strong> -->
+                            <div class="fund-start-date"></div>
+                        <!-- </strong> -->
+                    </div>
+                    <div class="invest-amount">
+                        <div class='text-bold'>Initial Investment</div>
+                        <input id='fundInvestment' type="text" name='fundInvestment'>
                     </div>
                     <div class="start-date">
-                        Start Date
-                        <select name="monthStart" id="start-month">
-                            <option value="1">Jan</option>
-                            <option value="2">Feb</option>
-                            <option value="3">Mar</option>
-                            <option value="4">Apr</option>
-                            <option value="5">May</option>
-                            <option value="6">Jun</option>
-                            <option value="7">Jul</option>
-                            <option value="8">Aug</option>
-                            <option value="9">Sep</option>
-                            <option value="10">Oct</option>
-                            <option value="11">Nov</option>
-                            <option value="12">Dec</option>
-                        </select>
-                        <select name="yearStart" id="start-year">
-                            
-                        </select>
+                        <div class='text-bold'>Start Date</div>
+                        <div>
+                            <select name="monthStart" id="start-month">
+                                <option value="1">Jan</option>
+                                <option value="2">Feb</option>
+                                <option value="3">Mar</option>
+                                <option value="4">Apr</option>
+                                <option value="5">May</option>
+                                <option value="6">Jun</option>
+                                <option value="7">Jul</option>
+                                <option value="8">Aug</option>
+                                <option value="9">Sep</option>
+                                <option value="10">Oct</option>
+                                <option value="11">Nov</option>
+                                <option value="12">Dec</option>
+                            </select>
+                            <select name="yearStart" id="start-year">
+                            </select>
+                        </div>
                     </div>
                     <div class="end-date">
-                        End date
-                        <select name="monthEnd" id="end-month">
-                            <option value="1">Jan</option>
-                            <option value="2">Feb</option>
-                            <option value="3">Mar</option>
-                            <option value="4">Apr</option>
-                            <option value="5">May</option>
-                            <option value="6">Jun</option>
-                            <option value="7">Jul</option>
-                            <option value="8">Aug</option>
-                            <option value="9">Sep</option>
-                            <option value="10">Oct</option>
-                            <option value="11">Nov</option>
-                            <option value="12">Dec</option>
-                        </select>
-                        </select>
-                        <select name="yearEnd" id="end-year">
-                            
-                        </select>
+                        <div class='text-bold'>End date</div>
+                        <div>
+                            <select name="monthEnd" id="end-month">
+                                <option value="1">Jan</option>
+                                <option value="2">Feb</option>
+                                <option value="3">Mar</option>
+                                <option value="4">Apr</option>
+                                <option value="5">May</option>
+                                <option value="6">Jun</option>
+                                <option value="7">Jul</option>
+                                <option value="8">Aug</option>
+                                <option value="9">Sep</option>
+                                <option value="10">Oct</option>
+                                <option value="11">Nov</option>
+                                <option value="12">Dec</option>
+                            </select>
+                            </select>
+                            <select name="yearEnd" id="end-year">
+                            </select>
+                        </div>  
+                    </div>
+                    <div class="disclosure">
+                        Placeholder disclosure lorem ipsum dolor sit amet, cons tincidunt ut laoreet dolore magna aliquam erat volutpat.
                     </div>
                 </div>
+                <div class="chart">
+                    <div class="chart-nav">
+                        <div class="details fund">
+                            <div class="oakmark"></div>Oakmark Fund
+                            <div class="benchmark"></div>Benchmark Fund
+                        </div>
+                    </div>
+                    <div id="chart-container"></div>
+                </div>
             </div>
-            <div id="container"></div>
         </div>
         <!-- <div class="data"></div> -->
 		<script src="./js/main.js"></script>
 		<link rel="stylesheet" href="./css/style.css">
 	</body>
 </html>
-
-<script>
-
-// 	Highcharts.stockChart('container', {
-//         rangeSelector: {
-//             selected: 1
-//         },
-//     yAxis: {
-
-//         // title: {
-//         //     text: 'Number of Employees'
-//         // }
-//     },
-//     xAxis: {
-//         range: 6 * 30 * 24 * 3600 * 1000,
-//         // title: {
-//         //     text: 'Number of Employees'
-//         // }
-//     },
-//     // legend: {
-//     //     layout: 'vertical',
-//     //     align: 'right',
-//     //     verticalAlign: 'middle'
-//     // },
-
-//     plotOptions: {
-//         series: {
-//             pointStart: 2010
-//         }
-//     },
-
-//     series: [{
-//         name: 'OakMark Fund',
-//         data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-//     }, 
-//     {
-//         name: 'Benchmark',
-//         data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-//     }]
-//     // }, {
-//     //     name: 'Sales & Distribution',
-//     //     data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-//     // }, {
-//     //     name: 'Project Development',
-//     //     data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-//     // }, {
-//     //     name: 'Other',
-//     //     data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-//     // }]
-
-// });
-</script>

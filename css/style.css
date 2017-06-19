@@ -4,14 +4,27 @@ body, *{
 	font-size: 12px;
 	font-weight: lighter;
 }
+.row{
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+}
+
 .highcharts-credits{
 	display: none;
 }
+.chart, .details{
+    display: inline-block;
+}
+.details.fund{
+    margin-top: 30px;
+}
 .chart{
-	display: none;
+    width: 78%;
+	opacity: 0;
 }
 .chart > div{
-	text-align: right;
+	/*text-align: right;*/
 }
 .fund-start-date{
 	font-weight: bold;
@@ -25,44 +38,58 @@ body, *{
 #container{
 	height: 400px;
 	}	
-.details, .date > div{
-	display: inline-block;
+.available > div{
+    display: inline-block;
+}
+.details.date > div{
+	/*display: inline-block;*/
 	padding-left: 10px;
+    margin: 30px 0;
+}
+.date input{
+    width: 180px;
+    height: 40px;
+    padding: 10px;
 }
 .fund{
-	width: 12%;
+	/*width: 22%;*/
     text-align: left;
 }
+select{
+    width: 60px;
+    height: 40px;
+    text-decoration: none;
+}
+#start-year,#end-year{
+    width: 100px;
+    margin-left: 20px;
+}
 .date{
-	width: 74%;
+    vertical-align: top;
+	width: 20%;
 }
 
 .oakmark{
-    width: 10px;
-    border-radius: 25px;
-    background: rgba(122, 70, 132, 0.64);
-    height: 10px;
-    border-width: 2px;
-    border-color: #7a4684;
-    border-style: solid;
-    display: inline-block;
-    margin-right: 10px;
-}
-.benchmark{
-    width: 10px;
+    width: 15px;
     border-radius: 25px;
     background: #9dc6e0;
-    height: 10px;
+    height: 15px;
     border-width: 2px;
     border-color: #6faadb;
     border-style: solid;
     display: inline-block;
     margin-right: 10px;
 }
-select{
-	width: 60px;
-    height: 40px;
-    text-decoration: none;
+.benchmark{
+    width: 15px;
+    border-radius: 25px;
+    background: rgba(122, 70, 132, 0.64);
+    height: 15px;
+    border-width: 2px;
+    border-color: #7a4684;
+    border-style: solid;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .highcharts-tooltip>span {
@@ -70,13 +97,21 @@ select{
     border: 1px solid silver;
     border-radius: 100%;
     box-shadow: 1px 1px 2px #888;
-    padding: 70px 5px;
+    padding: 50px 5px;
     width: 180px;
     height: 180px;
     text-align:center;
     box-sizing:border-box;
 }
 .highcharts-tooltip>span .head{
- 	font-size:36px;
+ 	font-size:24px;
  	color: #7a4684;
+}
+.disclosure{
+    height: 150px;
+    margin-bottom: 100px; 
+}
+.text-bold{
+    font-size: 14px;
+    font-weight: bold;
 }

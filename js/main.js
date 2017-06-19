@@ -12,17 +12,23 @@ $(function(){
 	var monthEnd = (window.location.search.substring(4)).split('&')[3].split('=')[1];
 	var yearStart = (window.location.search.substring(5)).split('&')[4].split('=')[1];
 	var yearEnd = (window.location.search.substring(6)).split('&')[5].split('=')[1];
+	var fundInvestment = (window.location.search.substring(6)).split('&')[6].split('=')[1];
 	var options = {
 		'query': query,
 		'cuspip': cuspip,
 		'monthStart': monthStart,
 		'monthEnd': monthEnd,
 		'yearStart': yearStart,
-		'yearEnd': yearEnd
+		'yearEnd': yearEnd,
+		'fundInvestment': fundInvestment
 	}
 	path = getQueryPath(options);
 	$('#end-month').val(monthEnd);
-
+	$('#fundInvestment').val(fundInvestment);
+	$('#fundInvestment').on('change', function(){
+		options['fundInvestment'] = parseInt($('#fundInvestment').val().replace(/$|,|[a-z]/, ""));
+		getStockData(path,options);
+	})
 	$('#start-month,#start-year,#end-month,#end-year').on('change', function(){
 		$.each($('#start-month,#start-year,#end-month,#end-year'),function(i,elem){
 			options[elem.name] = elem.value;
@@ -33,12 +39,12 @@ $(function(){
 		}
 		path = getQueryPath(options);
 		$('.container').html('');
-		getStockData(path);
+		getStockData(path,options);
 	})
-	getStockData(path);
+	getStockData(path,options);
 
 	// populate stock data
-	function getStockData(path){
+	function getStockData(path,options){
 		$.getJSON(path,function(data){
 			// set date available
 			date_available = Highcharts.dateFormat('%b %d, %Y', new Date(Date.parse(data[0]['monthEndDate'])));
@@ -64,11 +70,11 @@ $(function(){
 				setYear = false;
 				$('#end-year').val(year_array[year_array.length -1]);
 			}
-			highchart(fund_data,benchmark_data);
+			highchart(fund_data,benchmark_data,options);
 		}).error(function(){
 		}).complete(function(){
 			$('#loading-image').hide();
-			$('.chart').show();
+			$('.chart').css('opacity', 1);
 		});
 	}
 	// query path function
@@ -110,8 +116,8 @@ $(function(){
 	}
 
 	// Highchart Function
-	function highchart(fund_data,benchmark_data){
-		Highcharts.stockChart('container', {
+	function highchart(fund_data,benchmark_data,options){
+		Highcharts.stockChart('chart-container', {
 			exporting: { enabled: false },
 			width: 1000,
 			labels: {
@@ -133,7 +139,11 @@ $(function(){
 				}
 			},
 			tooltip: {
-       			backgroundColor: null,
+       			crosshairs: {
+                	color: 'transparent',
+                	dashStyle: 'solid'
+            	},
+            	backgroundColor: null,
 		        borderWidth: 0,
 		        shadow: false,
 		        useHTML: true,
@@ -145,13 +155,22 @@ $(function(){
 		        	// if(this.series.name == 'OakMark Fund'){
            //        		return false ;
            //      	}else {
-			            return '<b class="head">$' + ((this.y)/1000).toFixed().toString() + ',' + ((this.y)%1000).toString() + '</b> <br>' + Highcharts.dateFormat('%b %d, %Y', this.x);
+			            // return Highcharts.dateFormat('%b %d, %Y', this.x) +'</br><b class="head">$' + ((this.y)/1000).toFixed().toString() + ',' + ((this.y)%1000).toString() + '</b>'
 			        // }
+			        var s = [];
+
+		            $.each(this.points, function(i, point) {
+		                s.push(((this.y)/1000).toFixed().toString() + ',' + ((this.y)%1000).toString());
+		            });
+
+		            return Highcharts.dateFormat('%b %d, %Y', this.x) +
+		            "</br><b class='head'><b class='oakmark'></b>$" + 
+		            s.join("</br><b class='benchmark'></b>$") + '</b>' ;
 		        }
             },
 			yAxis: [{
 				min: 0,
-				max: 50000,
+				max: (parseInt(options['fundInvestment']) * 3),
 				opposite: false,
 				labels: {
 					formatter: function(){
@@ -199,7 +218,7 @@ $(function(){
 				{
 					name: 'OakMark Fund',
 					data: fund_data,
-					color: "#7a4684",
+					color: "#6faadb",
 					type: 'area',
 					fillColor: {
 						linearGradient: {
@@ -209,19 +228,19 @@ $(function(){
 							y2: 1
 						},
 						stops: [
-							[0, '#c797d8'],
+							[0, '#9dc6e0'],
 							[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
 						]
 					},
 					marker: {
-                    	fillColor: '#7a4684'
+                    	fillColor: '#6faadb'
                 	},
                 	showInNavigator: true
 				}, 
 				{
 					name: 'Benchmark',
 					data: benchmark_data,
-					color: "#6faadb",
+					color: "#7a4684",
 					type: 'area',
 					fillColor: {
 						linearGradient: {
@@ -231,12 +250,12 @@ $(function(){
 							y2: 0
 						},
 						stops: [
-							[0, '#9dc6e0'],
+							[0, '#c797d8'],
 							[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
 						]
 					},
 					marker: {
-                    	fillColor: '#6faadb'
+                    	fillColor: '#7a4684'
                 	},
                 	showInNavigator: true
 				}
