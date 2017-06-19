@@ -53,8 +53,8 @@ $(function(){
 			year_array = [];
 			var fund_data = new Array();
 			var	benchmark_data = new Array();
-			var fund_value = 10000;
-			var benchmark_value = 10000;
+			var fund_value = options['fundInvestment'];
+			var benchmark_value = options['fundInvestment'];
 			$.each(data,function(i,year){
 				c_month_fund = year['meNavMtd']* 100;
 				fund_value = fund_value + c_month_fund;
