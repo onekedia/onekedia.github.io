@@ -1,58 +1,62 @@
 body, *{
-	margin:0;
-	padding: 0;
-	font-size: 12px;
-	font-weight: lighter;
+    margin:0;
+    padding: 0;
+    font-size: 12px;
+    font-weight: lighter;
+    position: relative;
 }
-.row{
-    width: 100%;
-    height: 100%;
-    padding: 0 10px;
-}
+/*.row{*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*padding: 0 10px;*/
+/*}*/
 
 .highcharts-credits{
-	display: none;
+    display: none;
 }
 .chart, .details{
     display: inline-block;
 }
 .details.fund{
-    margin-top: 30px;
+    margin: 30px 30px;
+    display: inline-flex;
+    align-items: center;
 }
 .chart{
-    width: 78%;
-	opacity: 0;
+    width: 100%;
+    opacity: 0;
 }
 .chart > div{
-	/*text-align: right;*/
+    /*text-align: right;*/
 }
 .fund-start-date{
-	font-weight: bold;
-	font-size: 14px;
+    font-weight: bold;
+    font-size: 14px;
 }
 .chart-nav,#container {
-	min-width: 310px;
-	max-width: 1000px;
-	margin: 0 auto
+    min-width: 310px;
+    max-width: 1000px;
+    margin: 0 auto
 }
 #container{
-	height: 400px;
-	}	
+    height: 400px;
+    }   
 .available > div{
     display: inline-block;
 }
 .details.date > div{
-	/*display: inline-block;*/
-	padding-left: 10px;
+    /*display: inline-block;*/
+    padding-left: 10px;
     margin: 30px 0;
 }
 .date input{
     width: 180px;
     height: 40px;
     padding: 10px;
+    outline: none;
 }
 .fund{
-	/*width: 22%;*/
+    /*width: 22%;*/
     text-align: left;
 }
 select{
@@ -64,23 +68,12 @@ select{
     width: 100px;
     margin-left: 20px;
 }
-.date{
-    vertical-align: top;
-	width: 20%;
-}
+/*.date{*/
+    /*vertical-align: top;*/
+    /*width: 20%;*/
+/*}*/
 
 .oakmark{
-    width: 15px;
-    border-radius: 25px;
-    background: #9dc6e0;
-    height: 15px;
-    border-width: 2px;
-    border-color: #6faadb;
-    border-style: solid;
-    display: inline-block;
-    margin-right: 10px;
-}
-.benchmark{
     width: 15px;
     border-radius: 25px;
     background: rgba(122, 70, 132, 0.64);
@@ -90,6 +83,18 @@ select{
     border-style: solid;
     display: inline-block;
     margin-right: 10px;
+}
+.benchmark{
+    width: 15px;
+    border-radius: 25px;
+    background: #9dc6e0;
+    height: 15px;
+    border-width: 2px;
+    border-color: #6faadb;
+    border-style: solid;
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .highcharts-tooltip>span {
@@ -104,8 +109,8 @@ select{
     box-sizing:border-box;
 }
 .highcharts-tooltip>span .head{
- 	font-size:24px;
- 	color: #7a4684;
+    font-size:24px;
+    color: #7a4684;
 }
 .disclosure{
     height: 150px;
@@ -114,4 +119,33 @@ select{
 .text-bold{
     font-size: 14px;
     font-weight: bold;
+}
+
+.available {
+    display: inline-block;
+    margin-bottom: 15px!important;
+    /*border-bottom: 1px solid #ccc;*/
+}
+.date_available,
+.date_available span{
+    font-weight: 400;
+    font-style: normal;
+    padding-bottom: 15px;
+    font-size: 12px;
+    color: #6f6f6f;
+    position: relative;
+    /*right: 10px;*/
+}
+
+.date_available span{
+    /*padding-left: 15px;*/
+    font-weight: bold;
+}
+
+.flexWrapper{
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+.highcharts-yaxis-labels > span{
+    left: 840px !important;
 }

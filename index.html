@@ -1,87 +1,105 @@
 <html>
-	<head>
-		<title>Highchart</title>
-	</head>
-	<body>
-		<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
-		<script src="https://code.highcharts.com/stock/highstock.js"></script>
-		<script src="https://code.highcharts.com/modules/exporting.js"></script>
-		<div id="loading-image">
+    <head>
+        <title>Highchart</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+        <script src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <div id="loading-image">
             <img src="loading.gif">      
         </div>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="details date">
-                    <div class="available">
-                        <div>Date Available from</div>
-                        <!-- <strong> -->
-                            <div class="fund-start-date"></div>
-                        <!-- </strong> -->
-                    </div>
-                    <div class="invest-amount">
-                        <div class='text-bold'>Initial Investment</div>
-                        <input id='fundInvestment' type="text" name='fundInvestment'>
-                    </div>
-                    <div class="start-date">
-                        <div class='text-bold'>Start Date</div>
-                        <div>
-                            <select name="monthStart" id="start-month">
-                                <option value="1">Jan</option>
-                                <option value="2">Feb</option>
-                                <option value="3">Mar</option>
-                                <option value="4">Apr</option>
-                                <option value="5">May</option>
-                                <option value="6">Jun</option>
-                                <option value="7">Jul</option>
-                                <option value="8">Aug</option>
-                                <option value="9">Sep</option>
-                                <option value="10">Oct</option>
-                                <option value="11">Nov</option>
-                                <option value="12">Dec</option>
-                            </select>
-                            <select name="yearStart" id="start-year">
-                            </select>
+                <div class="col-md-2 col-sm-5 col-xs-12">
+                    <div class="details date">
+                        <div class="available">
+                            <div class="date_available">Date Available from <span class="fund-start-date"></span></div>
+                            <!-- <strong> -->
+
+                            <!-- </strong> -->
+                        </div>
+                        <div class="invest-amount">
+                            <div class='text-bold'>Initial Investment</div>
+                            <input id='fundInvestment' type="text" name='fundInvestment'>
+                        </div>
+                        <div class="start-date">
+                            <div class='text-bold'>Start Date</div>
+                            <div class="flexWrapper">
+                                <select name="monthStart" id="start-month">
+                                    <option value="1">Jan</option>
+                                    <option value="2">Feb</option>
+                                    <option value="3">Mar</option>
+                                    <option value="4">Apr</option>
+                                    <option value="5">May</option>
+                                    <option value="6">Jun</option>
+                                    <option value="7">Jul</option>
+                                    <option value="8">Aug</option>
+                                    <option value="9">Sep</option>
+                                    <option value="10">Oct</option>
+                                    <option value="11">Nov</option>
+                                    <option value="12">Dec</option>
+                                </select>
+                                <select name="yearStart" id="start-year">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="end-date">
+                            <div class='text-bold'>End date</div>
+                            <div class="flexWrapper">
+                                <select name="monthEnd" id="end-month">
+                                    <option value="1">Jan</option>
+                                    <option value="2">Feb</option>
+                                    <option value="3">Mar</option>
+                                    <option value="4">Apr</option>
+                                    <option value="5">May</option>
+                                    <option value="6">Jun</option>
+                                    <option value="7">Jul</option>
+                                    <option value="8">Aug</option>
+                                    <option value="9">Sep</option>
+                                    <option value="10">Oct</option>
+                                    <option value="11">Nov</option>
+                                    <option value="12">Dec</option>
+                                </select>
+                                </select>
+                                <select name="yearEnd" id="end-year">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="disclosure">
+                            Placeholder disclosure lorem ipsum dolor sit amet, cons tincidunt ut laoreet dolore magna aliquam erat volutpat.
                         </div>
                     </div>
-                    <div class="end-date">
-                        <div class='text-bold'>End date</div>
-                        <div>
-                            <select name="monthEnd" id="end-month">
-                                <option value="1">Jan</option>
-                                <option value="2">Feb</option>
-                                <option value="3">Mar</option>
-                                <option value="4">Apr</option>
-                                <option value="5">May</option>
-                                <option value="6">Jun</option>
-                                <option value="7">Jul</option>
-                                <option value="8">Aug</option>
-                                <option value="9">Sep</option>
-                                <option value="10">Oct</option>
-                                <option value="11">Nov</option>
-                                <option value="12">Dec</option>
-                            </select>
-                            </select>
-                            <select name="yearEnd" id="end-year">
-                            </select>
-                        </div>  
-                    </div>
-                    <div class="disclosure">
-                        Placeholder disclosure lorem ipsum dolor sit amet, cons tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                    </div>
                 </div>
-                <div class="chart">
-                    <div class="chart-nav">
-                        <div class="details fund">
-                            <div class="oakmark"></div>Oakmark Fund
-                            <div class="benchmark"></div>Benchmark Fund
+                <div class="col-md-10 col-sm-7 col-xs-12">
+                    <div class="chart">
+                        <div class="chart-nav">
+                            <div class="details fund">
+                                <div class="oakmark"></div>Oakmark Fund
+                                <div class="benchmark"></div>Benchmark Fund
+                            </div>
                         </div>
+                        <div id="chart-container"></div>
                     </div>
-                    <div id="chart-container"></div>
                 </div>
+
             </div>
         </div>
         <!-- <div class="data"></div> -->
-		<script src="./js/main.js"></script>
-		<link rel="stylesheet" href="./css/style.css">
-	</body>
+        <script src="./js/main.js"></script>
+        <!-- jQuery -->
+        <script src="//code.jquery.com/jquery.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="./css/style.css">
+    </body>
 </html>
