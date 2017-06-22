@@ -149,3 +149,7 @@ select{
 .highcharts-yaxis-labels > span{
     left: 840px !important;
 }
+
+.highcharts-yaxis-labels:nth-child(2n+1) {
+    padding: 10px 0 0 !important;
+}
