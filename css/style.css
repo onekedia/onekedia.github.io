@@ -151,5 +151,5 @@ select{
 }
 
 .highcharts-yaxis-labels:nth-child(2n+1) {
-    padding: 10px 0 0 !important;
+    padding: 20px 0 0 !important;
 }
