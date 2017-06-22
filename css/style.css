@@ -150,6 +150,6 @@ select{
     left: 840px !important;
 }
 
-.highcharts-yaxis-labels:nth-child(2n) {
+.highcharts-yaxis-labels:nth-child(2n+1) {
     margin: 20px 0 0 !important;
 }
