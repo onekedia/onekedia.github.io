@@ -213,8 +213,8 @@ $(function(){
 			],
 			xAxis: {
 				type: 'datetime',
-				min: new Date('2015/1/22').getTime(),
-				max: new Date('2017/5/22').getTime(),
+				min: fund_data[0][0],//new Date('2015/1/22').getTime(),
+				max: fund_data[fund_data.length - 1][0] //new Date('2017/5/22').getTime(),
 				// tickInterval: 30*24*60*60
 			},
 			colors: ['#7cb5ec', '#434348', '#90ed7d', '#f7a35c', '#8085e9', 
