@@ -20,13 +20,13 @@ $(function(){
 		'monthEnd': monthEnd,
 		'yearStart': yearStart,
 		'yearEnd': yearEnd,
-		'fundInvestment': fundInvestment
+		'fundInvestment': fundInvestment.replace(/[^\d]/g, '')
 	}
 	path = getQueryPath(options);
 	$('#end-month').val(monthEnd);
-	$('#fundInvestment').val(fundInvestment);
+	$('#fundInvestment').val( '$' + fundInvestment.replace(/[^\d]/g, ''));
 	$('#fundInvestment').on('change', function(){
-		options['fundInvestment'] = parseInt($('#fundInvestment').val().replace(/$|,|[a-z]/, ""));
+		options['fundInvestment'] = parseInt($('#fundInvestment').val().replace(/[^\d]/g, ''));
 		getStockData(path,options);
 	})
 	$('#start-month,#start-year,#end-month,#end-year').on('change', function(){
