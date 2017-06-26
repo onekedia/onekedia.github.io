@@ -71,6 +71,8 @@ $(function(){
 				setYear = false;
 				$('#end-year').val(year_array[year_array.length -1]);
 			}
+			$('#fundName').html(data[0]['fundName']);
+			$('#benchmarkName').html(data[0]['primaryBenchmarkIndexName']);
 			highchart(fund_data,benchmark_data,options);
 		}).error(function(){
 		}).complete(function(){
@@ -182,6 +184,7 @@ $(function(){
 			},{
 		        linkedTo: 0,
 		        opposite: true,
+		        gridLineWidth: 0,
 		        tickPositioner: function(min,max){
 		            var data = this.chart.yAxis[0].series[0].processedYData;
 		            //last point
@@ -197,6 +200,7 @@ $(function(){
 		    {
 		        linkedTo: 1,
 		        opposite: true,
+		        gridLineWidth: 0,
 		        tickPositioner: function(min,max){
 		            var data = this.chart.yAxis[0].series[1].processedYData;
 		            //last point
