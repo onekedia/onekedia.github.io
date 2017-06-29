@@ -43,6 +43,23 @@ $(function(){
 	})
 	getStockData(path,options);
 
+	function getMax(arr, prop) {
+	    var max;
+	    for (var i=0 ; i<arr.length ; i++) {
+	        if (!max || parseInt(arr[i][prop]) > parseInt(max[prop]))
+	            max = arr[i];
+	    }
+	    return max;
+	}
+
+	function getMin(arr, prop) {
+	    var min;
+	    for (var i=0 ; i<arr.length ; i++) {
+	        if (!min || parseInt(arr[i][prop]) < parseInt(min[prop]))
+	            min = arr[i];
+	    }
+	    return min;
+	}
 	// populate stock data
 	function getStockData(path,options){
 		$.getJSON(path,function(data){
@@ -73,6 +90,10 @@ $(function(){
 			}
 			$('#fundName').html(data[0]['fundName']);
 			$('#benchmarkName').html(data[0]['primaryBenchmarkIndexName']);
+			options['fundMaxRange'] = getMax(fund_data,'1')[1];
+			options['benchMaxRange'] = getMax(benchmark_data,'1')[1];
+			options['fundMinRange'] = getMin(fund_data,'1')[1];
+			options['benchMinRange'] = getMin(benchmark_data,'1')[1];
 			highchart(fund_data,benchmark_data,options);
 		}).error(function(){
 		}).complete(function(){
@@ -180,7 +201,8 @@ $(function(){
 					formatter: function(){
 						return "$" + (this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");//((this.value)/1000).toString() + ',000';
 					}
-				}
+				},
+				showFirstLabel: true
 			},{
 		        linkedTo: 0,
 		        opposite: true,
