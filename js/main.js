@@ -1,47 +1,46 @@
-$(function(){
-	$('#loading-image').show();
-	// cuspip=543487854;
-	// monthStart=1;
-	// monthEnd=5;
-	// yearStart=2015;
-	// yearEnd=2017;
-	var setYear = true;
-	var query = (window.location.search.substring(1)).split('&')[0].split('=')[1];
-	var cuspip = (window.location.search.substring(2)).split('&')[1].split('=')[1];
-	var monthStart = (window.location.search.substring(3)).split('&')[2].split('=')[1];
-	var monthEnd = (window.location.search.substring(4)).split('&')[3].split('=')[1];
-	var yearStart = (window.location.search.substring(5)).split('&')[4].split('=')[1];
-	var yearEnd = (window.location.search.substring(6)).split('&')[5].split('=')[1];
-	var fundInvestment = (window.location.search.substring(6)).split('&')[6].split('=')[1];
-	var options = {
-		'query': query,
-		'cuspip': cuspip,
-		'monthStart': monthStart,
-		'monthEnd': monthEnd,
-		'yearStart': yearStart,
-		'yearEnd': yearEnd,
-		'fundInvestment': fundInvestment.replace(/[^\d]/g, '')
-	}
-	path = getQueryPath(options);
-	$('#end-month').val(monthEnd);
-	$('#fundInvestment').val( '$' + fundInvestment.replace(/[^\d]/g, ''));
-	$('#fundInvestment').on('change', function(){
-		options['fundInvestment'] = parseInt($('#fundInvestment').val().replace(/[^\d]/g, ''));
-		getStockData(path,options);
-	})
-	$('#start-month,#start-year,#end-month,#end-year').on('change', function(){
-		$.each($('#start-month,#start-year,#end-month,#end-year'),function(i,elem){
-			options[elem.name] = elem.value;
-		})
-		if (options['yearEnd'] < options['yearStart']){
-			options['yearEnd'] = options['yearStart'];
-			$('#end-year').val(options['yearStart']);
-		}
+var setYear = true;
+var cuspip=543487854;
+var monthStart=1;
+var monthEnd=5;
+var yearStart=2015;
+var yearEnd=2017;
+var query='path2';
+var fundInvestment='10000';
+var chart;
+var options = {
+	'query': query,
+	'cuspip': cuspip,
+	'monthStart': monthStart,
+	'monthEnd': monthEnd,
+	'yearStart': yearStart,
+	'yearEnd': yearEnd,
+	'fundInvestment': fundInvestment.replace(/[^\d]/g, '')
+};
+(function() {
+	setTimeout(function(){
 		path = getQueryPath(options);
-		$('.container').html('');
+		$('#end-month').val(monthEnd);
+		$('#fundInvestment').val( '$' + fundInvestment.replace(/[^\d]/g, ''));
+		$('#fundInvestment').on('change', function(){
+			options['fundInvestment'] = parseInt($('#fundInvestment').val().replace(/[^\d]/g, ''));
+			getStockData(path,options);
+		});
+		$('#start-month,#start-year,#end-month,#end-year').on('change', function(){
+			$.each($('#start-month,#start-year,#end-month,#end-year'),function(i,elem){
+				options[elem.name] = elem.value;
+			})
+			if (options['yearEnd'] < options['yearStart']){
+				options['yearEnd'] = options['yearStart'];
+				$('#end-year').val(options['yearStart']);
+			}
+			path = getQueryPath(options);
+			$('.container').html('');
+			getStockData(path,options);
+		});
+		console.log('getTime');
+		// plotchart();
 		getStockData(path,options);
-	})
-	getStockData(path,options);
+	},3000);
 
 	function getMax(arr, prop) {
 	    var max;
@@ -73,10 +72,10 @@ $(function(){
 			var fund_value = parseInt(options['fundInvestment']);
 			var benchmark_value = parseInt(options['fundInvestment']);
 			$.each(data,function(i,year){
-				c_month_fund = (year['meNavMtd']/ 100) * parseInt(options['fundInvestment']);
+				c_month_fund = (year['meFund']/ 100) * parseInt(options['fundInvestment']);
 				fund_value = Math.round(fund_value + c_month_fund);
 				fund_data.push(new Array(Date.parse(year['monthEndDate']), fund_value));
-				c_month_benchmark = (year['returnMTD_me']/ 100) * parseInt(options['fundInvestment']);
+				c_month_benchmark = (year['meBenchmark']/ 100) * parseInt(options['fundInvestment']);
 				benchmark_value = Math.round(benchmark_value + c_month_benchmark);
 				benchmark_data.push(new Array(Date.parse(year['monthEndDate']), benchmark_value));
 				year_array.push(year['returnYear']);
@@ -95,10 +94,12 @@ $(function(){
 			options['fundMinRange'] = getMin(fund_data,'1')[1];
 			options['benchMinRange'] = getMin(benchmark_data,'1')[1];
 			highchart(fund_data,benchmark_data,options);
-		}).error(function(){
-		}).complete(function(){
-			$('#loading-image').hide();
-			$('.chart').css('opacity', 1);
+			console.log('there', $('#chart-container'));
+		// }).error(function(){
+			// console.log('nothing found');
+		// }).complete(function(){
+		// 	$('#loading-image').hide();
+		// 	$('.chart').css('opacity', 1);
 		});
 	}
 	// query path function
@@ -107,7 +108,7 @@ $(function(){
 			path = "http://cmsapbosv01:8180/search/service/growth10k/history/"+options['cuspip']+"?"+'monthStart='+options['monthStart']+'&monthEnd='+options['monthEnd']+'&yearStart='+options['yearStart']+'&yearEnd='+options['yearEnd']
 		}
 		else{
-			path = 'data.json';
+			path = '/data.json';
 		}
 		return path
 	}
@@ -141,9 +142,9 @@ $(function(){
 
 	// Highchart Function
 	function highchart(fund_data,benchmark_data,options){
-		Highcharts.stockChart('chart-container', {
+		chart = Highcharts.stockChart('chart-container', {
 			exporting: { enabled: false },
-			width: 800,
+			// width: 800,
 			labels: {
 			    align: 'left',
 			    x: 0,
@@ -259,7 +260,7 @@ $(function(){
 							y2: 1
 						},
 						stops: [
-							[0, '#c797d8'],
+							[0, '#643488'],
 							[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
 						]
 					},
@@ -271,7 +272,7 @@ $(function(){
 				{
 					name: 'Benchmark',
 					data: benchmark_data,
-					color: "#6faadb",
+					color: "#00B5CC",
 					type: 'area',
 					fillColor: {
 						linearGradient: {
@@ -282,15 +283,18 @@ $(function(){
 						},
 						stops: [
 							[0, '#9dc6e0'],
-							[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+							[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.15).get('rgba')]
 						]
 					},
 					marker: {
-                    	fillColor: '#6faadb'
+                    	fillColor: '#00B5CC'
                 	},
                 	showInNavigator: true
 				}
 			]
 		});
+		if(500 >= $(document).width()){
+			chart.setSize(500);
+		}
 	}
-});
+})();

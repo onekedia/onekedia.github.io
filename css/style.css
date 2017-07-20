@@ -76,10 +76,10 @@ select{
 .oakmark{
     width: 15px;
     border-radius: 25px;
-    background: rgba(122, 70, 132, 0.64);
+    background: rgba(100, 52, 136, 0.15);
     height: 15px;
-    border-width: 2px;
-    border-color: #7a4684;
+    border-width: 3px;
+    border-color: #643488;
     border-style: solid;
     display: inline-block;
     margin-right: 10px;
@@ -87,10 +87,10 @@ select{
 .benchmark{
     width: 15px;
     border-radius: 25px;
-    background: #9dc6e0;
+    background: rgba(0, 181, 204, 0.15);
     height: 15px;
-    border-width: 2px;
-    border-color: #6faadb;
+    border-width: 3px;
+    border-color: #00B5CC;
     border-style: solid;
     display: inline-block;
     margin-right: 10px;
