@@ -63,7 +63,10 @@ var options = {
 	function getStockData(path,options){
 		$.getJSON(path,function(data){
 			// set date available
-			date_available = Highcharts.dateFormat('%b %d, %Y', new Date(Date.parse(data[0]['monthEndDate']).split(' ')[0])));
+			date_available = Highcharts.dateFormat('%b %d, %Y', new Date(
+						Date.parse(data[0]['monthEndDate']).split(' ')[0])
+						);
+			);
 			
 			$('.fund-start-date').html(date_available);
 			year_array = [];
