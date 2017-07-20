@@ -1,15 +1,16 @@
+var date = new Date;
 var setYear = true;
-var cuspip=543487854;
+var cusip=543487854;
 var monthStart=1;
-var monthEnd=5;
+var monthEnd=date.getMonth();
 var yearStart=2015;
-var yearEnd=2017;
+var yearEnd= date.getFullYear();
 var query='path2';
 var fundInvestment='10000';
 var chart;
 var options = {
 	'query': query,
-	'cuspip': cuspip,
+	'cusip': cusip,
 	'monthStart': monthStart,
 	'monthEnd': monthEnd,
 	'yearStart': yearStart,
@@ -20,6 +21,12 @@ var options = {
 	setTimeout(function(){
 		path = getQueryPath(options);
 		$('#end-month').val(monthEnd);
+		options['cusip'] = $('#chart-container').attr('data-cusip');
+		options['monthStart'] = new Date($('#chart-container').attr('data-startdate')).getMonth();
+		options['yearStart'] = new Date($('#chart-container').attr('data-startdate')).getFullYear();
+		if ((date.getFullYear() - 10) > options['yearStart']){
+			options['yearStart'] = date.getFullYear() - 10;
+		}
 		$('#fundInvestment').val( '$' + fundInvestment.replace(/[^\d]/g, ''));
 		$('#fundInvestment').on('change', function(){
 			options['fundInvestment'] = parseInt($('#fundInvestment').val().replace(/[^\d]/g, ''));
@@ -37,34 +44,31 @@ var options = {
 			$('.container').html('');
 			getStockData(path,options);
 		});
-		console.log('getTime');
-		// plotchart();
 		getStockData(path,options);
 	},3000);
 
 	function getMax(arr, prop) {
-	    var max;
-	    for (var i=0 ; i<arr.length ; i++) {
-	        if (!max || parseInt(arr[i][prop]) > parseInt(max[prop]))
-	            max = arr[i];
-	    }
-	    return max;
+		var max;
+		for (var i=0 ; i<arr.length ; i++) {
+			if (!max || parseInt(arr[i][prop]) > parseInt(max[prop]))
+				max = arr[i];
+		}
+		return max;
 	}
 
 	function getMin(arr, prop) {
-	    var min;
-	    for (var i=0 ; i<arr.length ; i++) {
-	        if (!min || parseInt(arr[i][prop]) < parseInt(min[prop]))
-	            min = arr[i];
-	    }
-	    return min;
+		var min;
+		for (var i=0 ; i<arr.length ; i++) {
+			if (!min || parseInt(arr[i][prop]) < parseInt(min[prop]))
+				min = arr[i];
+		}
+		return min;
 	}
 	// populate stock data
 	function getStockData(path,options){
 		$.getJSON(path,function(data){
 			// set date available
 			date_available = Highcharts.dateFormat('%b %d, %Y', new Date(Date.parse(data[0]['monthEndDate'].split(' ')[0])));
-			
 			$('.fund-start-date').html(date_available);
 			year_array = [];
 			var fund_data = new Array();
@@ -94,7 +98,6 @@ var options = {
 			options['fundMinRange'] = getMin(fund_data,'1')[1];
 			options['benchMinRange'] = getMin(benchmark_data,'1')[1];
 			highchart(fund_data,benchmark_data,options);
-			console.log('there', $('#chart-container'));
 		// }).error(function(){
 			// console.log('nothing found');
 		// }).complete(function(){
@@ -105,7 +108,7 @@ var options = {
 	// query path function
 	function getQueryPath(options){
 		if (query == "path1"){
-			path = "http://cmsapbosv01:8180/search/service/growth10k/history/"+options['cuspip']+"?"+'monthStart='+options['monthStart']+'&monthEnd='+options['monthEnd']+'&yearStart='+options['yearStart']+'&yearEnd='+options['yearEnd']
+			path = "http://cmsapbosv01:8180/search/service/growth10k/history/"+options['cusip']+"?"+'monthStart='+options['monthStart']+'&monthEnd='+options['monthEnd']+'&yearStart='+options['yearStart']+'&yearEnd='+options['yearEnd']
 		}
 		else{
 			path = '/data.json';
@@ -116,19 +119,19 @@ var options = {
 	// year populate function
 	function populateYear(year_array){
 		Array.prototype.contains = function(v) {
-		    for(var i = 0; i < this.length; i++) {
-		        if(this[i] === v) return true;
-		    }
-		    return false;
+			for(var i = 0; i < this.length; i++) {
+				if(this[i] === v) return true;
+			}
+			return false;
 		};
 		Array.prototype.unique = function() {
-		    var arr = [];
-		    for(var i = 0; i < this.length; i++) {
-		        if(!arr.contains(this[i])) {
-		            arr.push(this[i]);
-		        }
-		    }
-		    return arr; 
+			var arr = [];
+			for(var i = 0; i < this.length; i++) {
+				if(!arr.contains(this[i])) {
+					arr.push(this[i]);
+				}
+			}
+			return arr; 
 		}
 		year_array = year_array.unique();
 		i = 1;
@@ -146,13 +149,13 @@ var options = {
 			exporting: { enabled: false },
 			// width: 800,
 			labels: {
-			    align: 'left',
-			    x: 0,
-			    y: 0
+				align: 'left',
+				x: 0,
+				y: 0
 			},
 			scrollbar: {
-            	enabled: false
-        	},
+				enabled: false
+			},
 			rangeSelector: {
 				selected: 5,
 				inputEnabled: false,
@@ -164,35 +167,27 @@ var options = {
 				}
 			},
 			tooltip: {
-       			crosshairs: {
-                	color: 'transparent',
-                	dashStyle: 'solid'
-            	},
-            	backgroundColor: null,
-		        borderWidth: 0,
-		        shadow: false,
-		        useHTML: true,
-		        style: {
-		            padding: 0
-		        },
-		        formatter: function() {
-		        	// console.log(this);
-		        	// if(this.series.name == 'OakMark Fund'){
-           //        		return false ;
-           //      	}else {
-			            // return Highcharts.dateFormat('%b %d, %Y', this.x) +'</br><b class="head">$' + ((this.y)/1000).toFixed().toString() + ',' + ((this.y)%1000).toString() + '</b>'
-			        // }
-			        var s = [];
-
-		            $.each(this.points, function(i, point) {
-		                s.push((this.y + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,").toString());
-		            });
-
-		            return Highcharts.dateFormat('%b %d, %Y', this.x) +
-		            "</br><b class='head'><b class='oakmark'></b>$" + 
-		            s.join("</br><b class='benchmark'></b>$") + '</b>' ;
-		        }
-            },
+				crosshairs: {
+					color: 'transparent',
+					dashStyle: 'solid'
+				},
+				backgroundColor: null,
+				borderWidth: 0,
+				shadow: false,
+				useHTML: true,
+				style: {
+					padding: 0
+				},
+				formatter: function() {
+					var s = [];
+					$.each(this.points, function(i, point) {
+						s.push((this.y + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,").toString());
+					});
+					return Highcharts.dateFormat('%b %d, %Y', this.x) +
+					"</br><b class='head'><b class='oakmark'></b>$" + 
+					s.join("</br><b class='benchmark'></b>$") + '</b>' ;
+				}
+			},
 			yAxis: [{
 				min: 0,
 				max: (parseInt(options['fundInvestment']) * 5),
@@ -205,37 +200,37 @@ var options = {
 				},
 				showFirstLabel: true
 			},{
-		        linkedTo: 0,
-		        opposite: true,
-		        gridLineWidth: 0,
-		        tickPositioner: function(min,max){
-		            var data = this.chart.yAxis[0].series[0].processedYData;
-		            //last point
-		            return [data[data.length-1]];
-		        },
-		        labels: {
-		        		useHTML: true,
-		                formatter: function () {
-		                	return '<span style="color:gray;">Ending Value: </span><br/><b>'+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b>'
-		                }
-		        }
-		    },
-		    {
-		        linkedTo: 1,
-		        opposite: true,
-		        gridLineWidth: 0,
-		        tickPositioner: function(min,max){
-		            var data = this.chart.yAxis[0].series[1].processedYData;
-		            //last point
-		            return [data[data.length-1]];
-		        },
-		        labels: {
-		                useHTML: true,
-		                formatter: function () {
-		                	return '</br><span style="color:gray;">Ending Value: </span><br/><b>'+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b>'
-		                }
-		        }
-		    }
+				linkedTo: 0,
+				opposite: true,
+				gridLineWidth: 0,
+				tickPositioner: function(min,max){
+					var data = this.chart.yAxis[0].series[0].processedYData;
+					//last point
+					return [data[data.length-1]];
+				},
+				labels: {
+						useHTML: true,
+						formatter: function () {
+							return '<span style="color:gray;">Ending Value: </span><br/><b>'+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b>'
+						}
+				}
+			},
+			{
+				linkedTo: 1,
+				opposite: true,
+				gridLineWidth: 0,
+				tickPositioner: function(min,max){
+					var data = this.chart.yAxis[0].series[1].processedYData;
+					//last point
+					return [data[data.length-1]];
+				},
+				labels: {
+					useHTML: true,
+					formatter: function () {
+						return '</br><span style="color:gray;">Ending Value: </span><br/><b>'+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b>'
+					}
+				}
+			}
 
 			],
 			xAxis: {
@@ -265,9 +260,9 @@ var options = {
 						]
 					},
 					marker: {
-                    	fillColor: '#7a4684'
-                	},
-                	showInNavigator: true
+						fillColor: '#7a4684'
+					},
+					showInNavigator: true
 				}, 
 				{
 					name: 'Benchmark',
@@ -287,9 +282,9 @@ var options = {
 						]
 					},
 					marker: {
-                    	fillColor: '#00B5CC'
-                	},
-                	showInNavigator: true
+						fillColor: '#00B5CC'
+					},
+					showInNavigator: true
 				}
 			]
 		});
