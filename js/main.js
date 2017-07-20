@@ -63,7 +63,7 @@ var options = {
 	function getStockData(path,options){
 		$.getJSON(path,function(data){
 			// set date available
-			date_available = Highcharts.dateFormat('%b %d, %Y', new Date(Date.parse(data[0]['monthEndDate']).split(' ')[0]));
+			date_available = Highcharts.dateFormat('%b %d, %Y', new Date(Date.parse(data[0]['monthEndDate'].split(' ')[0])));
 			
 			$('.fund-start-date').html(date_available);
 			year_array = [];
@@ -74,10 +74,10 @@ var options = {
 			$.each(data,function(i,year){
 				c_month_fund = (year['meFund']/ 100) * parseInt(options['fundInvestment']);
 				fund_value = Math.round(fund_value + c_month_fund);
-				fund_data.push(new Array(Date.parse(year['monthEndDate']).split(' ')[0], fund_value));
+				fund_data.push(new Array(Date.parse(year['monthEndDate'].split(' ')[0]), fund_value));
 				c_month_benchmark = (year['meBenchmark']/ 100) * parseInt(options['fundInvestment']);
 				benchmark_value = Math.round(benchmark_value + c_month_benchmark);
-				benchmark_data.push(new Array(Date.parse(year['monthEndDate']).split(' ')[0], benchmark_value));
+				benchmark_data.push(new Array(Date.parse(year['monthEndDate'].split(' ')[0]), benchmark_value));
 				year_array.push(year['returnYear']);
 			});
 			console.log(fund_data,benchmark_data)

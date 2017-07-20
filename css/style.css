@@ -24,7 +24,7 @@ body, *{
 }
 .chart{
     width: 100%;
-    opacity: 0;
+    /*opacity: 0;*/
 }
 .chart > div{
     /*text-align: right;*/
