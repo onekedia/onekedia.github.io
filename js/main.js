@@ -5,7 +5,7 @@ var monthStart=1;
 var monthEnd=date.getMonth();
 var yearStart=2015;
 var yearEnd= date.getFullYear();
-var query='path2';
+var query='path1';
 var fundInvestment='10000';
 var chart;
 var options = {
@@ -19,11 +19,11 @@ var options = {
 };
 (function() {
 	setTimeout(function(){
-		path = getQueryPath(options);
 		$('#end-month').val(monthEnd);
 		options['cusip'] = $('#chart-container').attr('data-cusip');
 		options['monthStart'] = new Date($('#chart-container').attr('data-startdate')).getMonth();
 		options['yearStart'] = new Date($('#chart-container').attr('data-startdate')).getFullYear();
+		path = getQueryPath(options);
 		if ((date.getFullYear() - 10) > options['yearStart']){
 			options['yearStart'] = date.getFullYear() - 10;
 		}
@@ -41,7 +41,6 @@ var options = {
 				$('#end-year').val(options['yearStart']);
 			}
 			path = getQueryPath(options);
-			$('.container').html('');
 			getStockData(path,options);
 		});
 		getStockData(path,options);
@@ -110,7 +109,9 @@ var options = {
 	// query path function
 	function getQueryPath(options){
 		if (query == "path1"){
-			path = "http://cmsapbosv01:8180/search/service/growth10k/history/"+options['cusip']+"?"+'monthStart='+options['monthStart']+'&monthEnd='+options['monthEnd']+'&yearStart='+options['yearStart']+'&yearEnd='+options['yearEnd']
+			path = "https://www.ngam.natixis.com/search/service/growth10k/history/"+options['cusip']+"?"+'monthStart='+options['monthStart']+'&monthEnd='+options['monthEnd']+'&yearStart='+options['yearStart']+'&yearEnd='+options['yearEnd']
+			// path = "http://fwireboss03:8180/search/service/growth10k/history/"+options['cusip']+"?"+'monthStart='+options['monthStart']+'&monthEnd='+options['monthEnd']+'&yearStart='+options['yearStart']+'&yearEnd='+options['yearEnd']
+			//path = "http://cmsapbosv01:8180/search/service/growth10k/history/"+options['cusip']+"?"+'monthStart='+options['monthStart']+'&monthEnd='+options['monthEnd']+'&yearStart='+options['yearStart']+'&yearEnd='+options['yearEnd']
 		}
 		else{
 			path = '/data.json';
@@ -155,10 +156,13 @@ var options = {
 				x: 0,
 				y: 0
 			},
+			scrollbar: {
+				enabled: false
+			},
 			plotOptions: {
-			    series: {
-			    	lineWidth: 3,
-			        states: {
+				series: {
+					lineWidth: 3,
+					states: {
 			            hover: {
 			                enabled: true,
 			                halo: {
@@ -166,10 +170,7 @@ var options = {
 			                }
 			            }
 			        }
-			    }
-			},
-			scrollbar: {
-				enabled: false
+				}
 			},
 			rangeSelector: {
 				selected: 5,
@@ -200,7 +201,7 @@ var options = {
 					});
 					return Highcharts.dateFormat('%b %d, %Y', this.x) +
 					"</br><b class='head'><b class='oakmark'></b><b class='oakmark-text'>$" + 
-					s.join("</b></br><b class='benchmark'></b><b class='benchmark-text'>$") + '</b></b>' ;
+					s.join("</b></br><b class='benchmark'></b><b class='benchmark-text'>$") + '</b></b>';
 				}
 			},
 			yAxis: [{
@@ -224,10 +225,10 @@ var options = {
 					return [data[data.length-1]];
 				},
 				labels: {
-						useHTML: true,
-						formatter: function () {
-							return "<span class='end-val' style='color:gray;'>Ending Value: <br/><b>"+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b></span>'
-						}
+					useHTML: true,
+					formatter: function () {
+						return "<span class='end-val' style='color:gray;'>Ending Value: </span><br/><b>"+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b>'
+					}
 				}
 			},
 			{
@@ -242,7 +243,7 @@ var options = {
 				labels: {
 					useHTML: true,
 					formatter: function () {
-						return "</br><span class='end-val' style='color:gray;'>Ending Value: <br/><b>"+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b></span>'
+						return "</br><span class='end-val' style='color:gray;'>Ending Value: </span><br/><b>"+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b>'
 					}
 				}
 			}
@@ -254,84 +255,52 @@ var options = {
 				max: fund_data[fund_data.length - 1][0] //new Date('2017/5/22').getTime(),
 				// tickInterval: 30*24*60*60
 			},
-			colors: ['#7cb5ec', '#434348', '#90ed7d', '#f7a35c', '#8085e9', 
+			colors: ['#643488', '#00B5CC', '#90ed7d', '#f7a35c', '#8085e9', 
 				'#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'],
 			series: [
 				{
 					name: 'OakMark Fund',
 					data: fund_data,
-					color: "#7a4684",
+					color: "#643488",
 					type: 'area',
-					fillColor: {
-						linearGradient: {
-							x1: 2,
-							y1: 0,
-							x2: 0,
-							y2: 1
-						},
-						stops: [
-							[0, '#643488'],
-							[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-						]
-					},
+					fillOpacity: 0.15,
 					marker: {
 						fillColor: '#fff',
 						symbol: 'circle',
-            			lineColor: '#7a4684',
-            			lineWidth: 3,
-            			width: 40,
-            			height: 40
+            			lineColor: '#643488',
+            			lineWidth: 3
 					},
-					showInNavigator: true
+					showInNavigator: true,
+					zIndex: 2
 				}, 
 				{
 					name: 'Benchmark',
 					data: benchmark_data,
 					color: "#00B5CC",
 					type: 'area',
-					fillColor: {
-						linearGradient: {
-							x1: 0,
-							y1: 0,
-							x2: 0,
-							y2: 0
-						},
-						stops: [
-							[0, '#9dc6e0'],
-							[1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.15).get('rgba')]
-						]
-					},
+					fillOpacity: 0.15,
 					marker: {
 						fillColor: '#fff',
 						symbol: 'circle',
             			lineColor: '#00B5CC',
-            			lineWidth: 3,
-            			width: 60,
-            			height: 60
+            			lineWidth: 3
 					},
-					showInNavigator: true
+					showInNavigator: true,
+					zIndex: 1
 				}
 			],
 			navigator: {
 			    maskFill: 'rgba(239,239,239,0.45)',
 			    series: [{
 			        type: 'areaspline',
-			        color: 'rgba(255, 255, 255, 0.00)',
+			        color: '#643488',
 			        fillOpacity: 0.4,
 			        dataGrouping: {
 			            smoothed: false
 			        },
 			        lineWidth: 2,
-			        lineColor: 'red',
-			        fillColor : {
-			            linearGradient : {  
-			                x1 : 0, 
-			                y1 : 0, 
-			                x2 : 0, 
-			                y2 : 1 
-			            }, 
-			            stops : [[0, '#FF8000'], [1, '#FFFF00']] 
-			        },
+			        lineColor: '#643488',
+			        fillOpacity: 0.15,
 			        marker: {
 			            enabled: false
 			        },
@@ -339,29 +308,55 @@ var options = {
 			    },
 			    {
 			        type: 'areaspline',
-			        color: 'rgba(55, 55, 255, 0.00)',
-			        fillOpacity: 0.1,
+			        color: '#00B5CC',
+			        fillOpacity: 0.4,
 			        dataGrouping: {
 			            smoothed: false
 			        },
 			        lineWidth: 2,
-			        lineColor: 'red',
-			        fillColor : {
-			            linearGradient : {  
-			                x1 : 0, 
-			                y1 : 0, 
-			                x2 : 0, 
-			                y2 : 1 
-			            }, 
-			            stops : [[0, '#FF8000'], [1, '#FFFF00']] 
-			        },
+			        lineColor: '#00B5CC',
+			        fillOpacity: 0.15,
 			        marker: {
 			            enabled: false
 			        },
 			        shadow: true
 			    }
 			    ]
-			}
+			},
+			responsive: {
+	            rules: [{
+	                condition: {
+	                    maxWidth: 500
+	                },
+	                chartOptions: {
+	                    chart: {
+	                        height: 300
+	                    },
+	                    subtitle: {
+	                        text: null
+	                    },
+	                    navigator: {
+	                        enabled: false
+	                    }
+	                }
+	            },{
+	                condition: {
+	                    maxWidth: 800
+	                },
+	                chartOptions: {
+	                    chart: {
+	                        height: 400
+	                    },
+	                    subtitle: {
+	                        text: null
+	                    },
+	                    navigator: {
+	                        enabled: true
+	                    }
+	                }
+	            }
+	            ]
+	        }
 		});
 		if(500 >= $(document).width()){
 			chart.setSize(null);
