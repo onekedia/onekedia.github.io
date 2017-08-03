@@ -59,20 +59,25 @@ body, *{
     /*width: 22%;*/
     text-align: left;
 }
-select{
-    width: 60px;
-    height: 40px;
+.details.fund > div{
+
+}
+#end-month,#start-month,select{
+    width: 42%;
     text-decoration: none;
 }
 #start-year,#end-year{
-    width: 100px;
-    margin-left: 20px;
+    width: 50%;
+    margin-left: 8%;
 }
 /*.date{*/
     /*vertical-align: top;*/
     /*width: 20%;*/
 /*}*/
-
+.oakmark-text{
+    color: #643488;
+    font-size: 24px;
+}
 .oakmark{
     width: 15px;
     border-radius: 25px;
@@ -83,6 +88,10 @@ select{
     border-style: solid;
     display: inline-block;
     margin-right: 10px;
+}
+.benchmark-text{
+    color: #00B5CC;
+    font-size: 24px;
 }
 .benchmark{
     width: 15px;
@@ -101,7 +110,7 @@ select{
     background: rgba(255,255,255,0.85);
     border: 1px solid silver;
     border-radius: 100%;
-    box-shadow: 1px 1px 2px #888;
+    box-shadow: 0px 0px 0px #d7d7d7;
     padding: 50px 5px;
     width: 180px;
     height: 180px;
@@ -119,12 +128,12 @@ select{
 .text-bold{
     font-size: 14px;
     font-weight: bold;
+    margin-bottom: 4px;
 }
 
 .available {
     display: inline-block;
     margin-bottom: 15px!important;
-    /*border-bottom: 1px solid #ccc;*/
 }
 .date_available,
 .date_available span{
@@ -145,11 +154,96 @@ select{
 .flexWrapper{
     display: inline-flex;
     flex-wrap: wrap;
+    width: 100%;
 }
 .highcharts-yaxis-labels > span{
-    left: 840px !important;
+    left: 840px;
 }
 
 .highcharts-yaxis-labels:nth-child(2n+1) {
-    margin: 20px 0 0 !important;
+    margin: 20px 0 0;
+}
+.smallscreenonly{
+    display: none;
+}
+
+@media screen and (max-width:320px){
+    .details.fund{
+        margin: 0;
+        display: block;
+    }
+    .details.fund .fund-name{
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+    .details.fund-val{
+        text-align: right;
+    }
+    .details.fund-val .fund-value{
+        display: block;
+        width: 100%;
+        text-align: right;
+    }
+    #fundInvestment {
+        width: 100%
+    }
+    select,#start-year,#end-year,#start-month,#end-month{
+        width: 45%;
+    }
+    .flexWrapper{
+        display: block;
+    }
+    .highcharts-yaxis-labels > span{
+        display: none;
+    }
+    .smallscreenonly{
+        display: block;
+    }
+}
+@media screen and (max-width:768px){
+    .details.fund{
+        margin: 0;
+        display: block;
+    }
+    .details.fund .fund-name{
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+    .details.fund-val{
+        text-align: right;
+    }
+    .details.fund-val .fund-value{
+        display: block;
+        width: 100%;
+        text-align: right;
+    }
+    #fundInvestment {
+        width: 100%
+    }
+    select,#start-year,#end-year,#start-month,#end-month{
+        width: 45%;
+    }
+    .flexWrapper{
+        display: block;
+    }
+    .highcharts-yaxis-labels > span{
+        display: none;
+    }
+    .smallscreenonly{
+        display: block;
+    }
+}
+@media screen and (max-width:1080px){
+    .flexWrapper{
+        display: block;
+    }
+    .highcharts-yaxis-labels > span{
+        display: none;
+    }
+    .flexWrapper select{
+        width: 100%;
+        margin-bottom: 4px;
+    }
 }

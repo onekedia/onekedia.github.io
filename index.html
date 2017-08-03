@@ -15,12 +15,12 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
         <script src="https://code.highcharts.com/stock/highstock.js"></script>
         
-        <div id="loading-image">
+        <!-- <div id="loading-image">
             <img src="loading.gif">      
-        </div>
+        </div> -->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 col-sm-5 col-xs-12">
+                <div class="col-lg-2 col-md-3 col-sm-5 col-xs-12">
                     <div class="details date">
                         <div class="available">
                             <div class="date_available">Date Available from <span class="fund-start-date"></span></div>
@@ -79,12 +79,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-10 col-sm-7 col-xs-12">
+                <div class="col-lg-10 col-md-9 col-sm-7 col-xs-12">
                     <div class="chart">
                         <div class="chart-nav">
-                            <div class="details fund">
-                                <div class="oakmark"></div><span id='fundName'>Oakmark Fund</span>
-                                <div class="benchmark"></div><span id="benchmarkName">Benchmark Fund</span>
+                            <div class="details fund col-sm-6 col-xs-6">
+                                <h6 class='smallscreenonly'>Funds:</h6>
+                                <div class="fund-name">
+                                    <div class="oakmark"></div><div id='fundName'>Oakmark Fund</div>
+                                </div>
+                                <div class="fund-name">
+                                    <div class="benchmark"></div><div id="benchmarkName">Benchmark Fund</div>
+                                </div>
+                            </div>
+                            <div class="details fund-val smallscreenonly col-sm-6 col-xs-6">
+                                <h6>Ending Value:</h6>
+                                <div class="fund-value">
+                                    <b id='fund-val'></b>
+                                </div>
+                                <div class="fund-value">
+                                    <b id="benchfund-val"></b>
+                                </div>
                             </div>
                         </div>
                         <div id="chart-container" data-cusip="63872T398" data-startdate='2013-09-30'></div>

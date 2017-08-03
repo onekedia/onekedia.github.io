@@ -93,6 +93,8 @@ var options = {
 			}
 			$('#fundName').html(data[0]['fundName']);
 			$('#benchmarkName').html(data[0]['primaryBenchmarkIndexName']);
+			$('#fund-val').html("$"+(fund_data[fund_data.length-1][1]+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+			$('#benchfund-val').html("$"+(benchmark_data[benchmark_data.length-1][1]+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
 			options['fundMaxRange'] = getMax(fund_data,'1')[1];
 			options['benchMaxRange'] = getMax(benchmark_data,'1')[1];
 			options['fundMinRange'] = getMin(fund_data,'1')[1];
@@ -153,6 +155,19 @@ var options = {
 				x: 0,
 				y: 0
 			},
+			plotOptions: {
+			    series: {
+			    	lineWidth: 3,
+			        states: {
+			            hover: {
+			                enabled: true,
+			                halo: {
+			                    size: 0
+			                }
+			            }
+			        }
+			    }
+			},
 			scrollbar: {
 				enabled: false
 			},
@@ -184,8 +199,8 @@ var options = {
 						s.push((this.y + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,").toString());
 					});
 					return Highcharts.dateFormat('%b %d, %Y', this.x) +
-					"</br><b class='head'><b class='oakmark'></b>$" + 
-					s.join("</br><b class='benchmark'></b>$") + '</b>' ;
+					"</br><b class='head'><b class='oakmark'></b><b class='oakmark-text'>$" + 
+					s.join("</b></br><b class='benchmark'></b><b class='benchmark-text'>$") + '</b></b>' ;
 				}
 			},
 			yAxis: [{
@@ -211,7 +226,7 @@ var options = {
 				labels: {
 						useHTML: true,
 						formatter: function () {
-							return '<span style="color:gray;">Ending Value: </span><br/><b>'+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b>'
+							return "<span class='end-val' style='color:gray;'>Ending Value: <br/><b>"+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b></span>'
 						}
 				}
 			},
@@ -227,7 +242,7 @@ var options = {
 				labels: {
 					useHTML: true,
 					formatter: function () {
-						return '</br><span style="color:gray;">Ending Value: </span><br/><b>'+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b>'
+						return "</br><span class='end-val' style='color:gray;'>Ending Value: <br/><b>"+"$"+(this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +'</b></span>'
 					}
 				}
 			}
@@ -260,7 +275,12 @@ var options = {
 						]
 					},
 					marker: {
-						fillColor: '#7a4684'
+						fillColor: '#fff',
+						symbol: 'circle',
+            			lineColor: '#7a4684',
+            			lineWidth: 3,
+            			width: 40,
+            			height: 40
 					},
 					showInNavigator: true
 				}, 
@@ -282,14 +302,69 @@ var options = {
 						]
 					},
 					marker: {
-						fillColor: '#00B5CC'
+						fillColor: '#fff',
+						symbol: 'circle',
+            			lineColor: '#00B5CC',
+            			lineWidth: 3,
+            			width: 60,
+            			height: 60
 					},
 					showInNavigator: true
 				}
-			]
+			],
+			navigator: {
+			    maskFill: 'rgba(239,239,239,0.45)',
+			    series: [{
+			        type: 'areaspline',
+			        color: 'rgba(255, 255, 255, 0.00)',
+			        fillOpacity: 0.4,
+			        dataGrouping: {
+			            smoothed: false
+			        },
+			        lineWidth: 2,
+			        lineColor: 'red',
+			        fillColor : {
+			            linearGradient : {  
+			                x1 : 0, 
+			                y1 : 0, 
+			                x2 : 0, 
+			                y2 : 1 
+			            }, 
+			            stops : [[0, '#FF8000'], [1, '#FFFF00']] 
+			        },
+			        marker: {
+			            enabled: false
+			        },
+			        shadow: true
+			    },
+			    {
+			        type: 'areaspline',
+			        color: 'rgba(55, 55, 255, 0.00)',
+			        fillOpacity: 0.1,
+			        dataGrouping: {
+			            smoothed: false
+			        },
+			        lineWidth: 2,
+			        lineColor: 'red',
+			        fillColor : {
+			            linearGradient : {  
+			                x1 : 0, 
+			                y1 : 0, 
+			                x2 : 0, 
+			                y2 : 1 
+			            }, 
+			            stops : [[0, '#FF8000'], [1, '#FFFF00']] 
+			        },
+			        marker: {
+			            enabled: false
+			        },
+			        shadow: true
+			    }
+			    ]
+			}
 		});
 		if(500 >= $(document).width()){
-			chart.setSize(500);
+			chart.setSize(null);
 		}
 	}
 })();
