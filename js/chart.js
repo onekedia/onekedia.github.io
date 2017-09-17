@@ -5,7 +5,7 @@ var monthStart=1;
 var monthEnd=date.getMonth();
 var yearStart=2015;
 var yearEnd= date.getFullYear();
-var query='path';
+var query='path1';
 var fundInvestment='10000';
 var chart;
 var options = {
@@ -27,10 +27,9 @@ var options = {
 		if ((date.getFullYear() - 10) > options['yearStart']){
 			options['yearStart'] = date.getFullYear() - 10;
 		}
-		$('#fundInvestment').val( '$' + fundInvestment.replace(/[^\d]/g, '').replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,").toString());
+		$('#fundInvestment').val( '$' + fundInvestment.replace(/[^\d]/g, ''));
 		$('#fundInvestment').on('change', function(){
 			options['fundInvestment'] = parseInt($('#fundInvestment').val().replace(/[^\d]/g, ''));
-			$('#fundInvestment').val( '$' + (parseInt($('#fundInvestment').val().replace(/[^\d]/g, '')) + '').replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,").toString());
 			getStockData(path,options);
 		});
 		$('#start-month,#start-year,#end-month,#end-year').on('change', function(){
@@ -66,42 +65,47 @@ var options = {
 	}
 	// populate stock data
 	function getStockData(path,options){
-		var data = new Array();
-		if (data.length == 0){
-			$.getJSON(path,function(data){
-			// }).error(function(){
-				// console.log('nothing found');
-				// set date available
-				date_available = Highcharts.dateFormat('%b %d, %Y', new Date(Date.parse(data[0]['monthEndDate'])));
-				$('.fund-start-date').html(date_available);
-				year_array = [];
-				var fund_data = new Array();
-				// fund_data.push(new Array( new Date(Date.parse(data[0]['monthEndDate'].split(' ')[0])) ,options['fundInvestment']));
-
-				var fund_value = parseInt(options['fundInvestment']);
-				$.each(data,function(i,year){
-					c_month_fund = (year['meFund']/ 100) * parseInt(fund_value);
-		            fund_value = fund_value + Math.round(c_month_fund);
-					fund_data.push(new Array(Date.parse(year['monthEndDate']), fund_value));
-					year_array.push((new Date(Date.parse(year['monthEndDate']))).getFullYear());
-				});
-				// set year dropdown
-				if (setYear){
-					populateYear(year_array);
-					setYear = false;
-					$('#end-year').val(year_array[year_array.length -1]);
-				}
-				$('#fundName').html(data[0]['fundName']);
-				$('#fund-val').html("$"+(fund_data[fund_data.length-1][1]+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
-				options['fundMaxRange'] = getMax(fund_data,'1')[1];
-				options['fundMinRange'] = getMin(fund_data,'1')[1];
-				highchart(fund_data,options);
-			}).complete(function(){
-				// data = data;
-			// 	$('#loading-image').hide();
-			// 	$('.chart').css('opacity', 1);
+		$.getJSON(path,function(data){
+			// set date available
+			date_available = Highcharts.dateFormat('%b %d, %Y', new Date(Date.parse(data[0]['monthEndDate'].split(' ')[0])));
+			$('.fund-start-date').html(date_available);
+			year_array = [];
+			var fund_data = new Array();
+			// var	benchmark_data = new Array();
+			var fund_value = parseInt(options['fundInvestment']);
+			// var benchmark_value = parseInt(options['fundInvestment']);
+			$.each(data,function(i,year){
+				c_month_fund = (year['meFund']/ 100) * parseInt(options['fundInvestment']);
+				fund_value = Math.round(fund_value + c_month_fund);
+				fund_data.push(new Array(Date.parse(year['monthEndDate'].split(' ')[0]), fund_value));
+				// c_month_benchmark = (year['meBenchmark']/ 100) * parseInt(options['fundInvestment']);
+				// benchmark_value = Math.round(benchmark_value + c_month_benchmark);
+				// benchmark_data.push(new Array(Date.parse(year['monthEndDate'].split(' ')[0]), benchmark_value));
+				year_array.push(year['returnYear']);
 			});
-		}
+			// console.log(fund_data,benchmark_data)
+			// set year dropdown
+			if (setYear){
+				populateYear(year_array);
+				setYear = false;
+				$('#end-year').val(year_array[year_array.length -1]);
+			}
+			$('#fundName').html(data[0]['fundName']);
+			// $('#benchmarkName').html(data[0]['primaryBenchmarkIndexName']);
+			$('#fund-val').html("$"+(fund_data[fund_data.length-1][1]+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+			// $('#benchfund-val').html("$"+(benchmark_data[benchmark_data.length-1][1]+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+			options['fundMaxRange'] = getMax(fund_data,'1')[1];
+			// options['benchMaxRange'] = getMax(benchmark_data,'1')[1];
+			options['fundMinRange'] = getMin(fund_data,'1')[1];
+			// options['benchMinRange'] = getMin(benchmark_data,'1')[1];
+			// highchart(fund_data,benchmark_data,options);
+			highchart(fund_data,options);
+		// }).error(function(){
+			// console.log('nothing found');
+		// }).complete(function(){
+		// 	$('#loading-image').hide();
+		// 	$('.chart').css('opacity', 1);
+		});
 	}
 	// query path function
 	function getQueryPath(options){
@@ -144,9 +148,11 @@ var options = {
 	}
 
 	// Highchart Function
+	// function highchart(fund_data,benchmark_data,options){
 	function highchart(fund_data,options){
 		chart = Highcharts.stockChart('chart-container', {
 			exporting: { enabled: false },
+			// width: 800,
 			labels: {
 				align: 'left',
 				x: 0,
@@ -198,16 +204,17 @@ var options = {
 					return Highcharts.dateFormat('%b %d, %Y', this.x) +
 					"</br><b class='head'><b class='oakmark'></b><b class='oakmark-text'>$" +
 					s.join("</b>") + '</b>';
+					// "</br><b class='head'><b class='oakmark'></b><b class='oakmark-text'>$" + 
+					// s.join("</b></br><b class='benchmark'></b><b class='benchmark-text'>$") + '</b></b>';
 				}
 			},
 			yAxis: [{
-				min: Math.round(parseInt(options['fundMinRange'])),//0,//Math.round(parseInt(options['fundMinRange']) - (parseInt(options['fundMaxRange']) - parseInt(options['fundMinRange']))),
-				max: Math.round(parseInt(options['fundMaxRange'])),//+ (parseInt(options['fundMaxRange']) - parseInt(options['fundMinRange']))/10),
-				tickInterval: (Math.round(parseInt(options['fundMaxRange']) / 4)),//Math.round(((parseInt(options['fundMaxRange']) - parseInt(options['fundMinRange'])) / fund_data.length)),
+				min: 0,
+				max: (parseInt(options['fundInvestment']) * 5),
+				tickInterval: (parseInt(options['fundInvestment']) / 2),
 				opposite: false,
 				labels: {
 					formatter: function(){
-
 						return "$" + (this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");//((this.value)/1000).toString() + ',000';
 					}
 				},
@@ -250,13 +257,8 @@ var options = {
 			xAxis: {
 				type: 'datetime',
 				min: fund_data[0][0],//new Date('2015/1/22').getTime(),
-				max: fund_data[fund_data.length - 1][0], //new Date('2017/5/22').getTime(),
+				max: fund_data[fund_data.length - 1][0] //new Date('2017/5/22').getTime(),
 				// tickInterval: 30*24*60*60
-				labels: {
-					style: {
-
-					}
-				}
 			},
 			colors: ['#643488', '#00B5CC', '#90ed7d', '#f7a35c', '#8085e9', 
 				'#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'],
@@ -268,11 +270,10 @@ var options = {
 					type: 'area',
 					fillOpacity: 0.15,
 					marker: {
-            			lineWidth: 3,
-            			lineColor: '#643488',
 						fillColor: '#fff',
-            			radius: 6
-						// symbol: 'circle',
+						symbol: 'circle',
+            			lineColor: '#643488',
+            			lineWidth: 3
 					},
 					showInNavigator: true,
 					zIndex: 2
@@ -328,11 +329,6 @@ var options = {
 			    }
 			    ]
 			},
-			dataLabels: {
-            	style: {
-               		fontFamily: '\'kabelblack\'',
-               	}
-            },
 			responsive: {
 	            rules: [{
 	                condition: {
