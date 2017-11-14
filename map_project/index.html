@@ -4,142 +4,267 @@
     </head>
     <style>
         img.map, map area{
-            outline: none;
-        }
+        outline: none;
+    }
+
+    .dropdown-container{
+        width: 24%;
+        background: #643488;
+        padding-left: 20px;
+        color: #fff;
+        border: 1px solid #fff;
+        text-align: left;
+        line-height: 40px;
+        font-size: 18px;
+        position: relative;
+        display: inline-block;
+    }
+    .dropdown-container:hover{
+        background: #512275;
+    }
+    #country-view, #location-view{
+        display: none;
+    }
+
+    .dropdown{
+        width: 100%;
+    }
     </style>
 
     <body>
-        <div style="padding: 5%;">
-            <div style="display:flex;"> 
-                <div onmouseover="na();" onclick="na1();" id="nab" onmouseleave="map();" style="width:22%;background: grey; padding-left:20px; color: #fff;border: 1px  solid #fff; text-align:left; line-height: 40px; font-size:18px; ">
-                    North Americe <span style="text-align:right; margin-left:5%;" id="naplus">+</span>
-                </div>
-                <div onmouseover="la();" onclick="la1();" id="lab" onmouseleave="map();" style="width:22%;background: grey; padding-left:20px; color: #fff;border: 1px  solid #fff;text-align:left; line-height: 40px; font-size:18px; ">
-                    Latin America <span style="text-align:right; margin-left:5%;" id="laplus">+</span>
-                </div>
-                <div onmouseover="ea();" onclick="ea1();" id="eab" onmouseleave="map();" style="width:22%;background: grey; color: #fff; padding-left:20px;border: 1px  solid #fff;text-align:left; line-height: 40px; font-size:18px; ">
-                    EMEA <span style="text-align:right; margin-left:5%;" id="eaplus">+</span>
-                </div>
-                <div onmouseover="pa();" onclick="pa1();" id="pab" onmouseleave="map();" style="width:22%;background: grey; color: #fff;border: 1px  solid #fff; padding-left:20px;text-align:left; line-height: 40px; font-size:18px; ">
-                    Asia Pacific <span style="text-align:right; margin-left:5%;" id="paplus">+</span>
-                </div>
-            </div>
-            <div style="display:flex;"> 
-                <div id="nab1" style="width:22%; display:none; background: rgba(255,255,255,0.8); padding-left:20px; color: #000; text-align:left; line-height: 40px; font-size:16px; ">
-                    North Americe
-                </div>
-                <div id="lab1" style="margin-left:24%; display:none;  width:22%;background: rgba(255,255,255,0.8); padding-left:20px; color: #000;text-align:left; line-height: 40px; font-size:18px; ">
-                    Latin America
-                </div>
-                <div id="eab1" style="margin-left:48%;width:22%; display:none; background: rgba(255,255,255,0.8); color: #000; padding-left:20px;text-align:left; line-height: 40px; font-size:18px; ">
-                    EMEA
-                </div>
-                <div id="pab1" style="margin-left:72%;width:22%;display:none;  background: rgba(255,255,255,0.8); color: #000; padding-left:20px;text-align:left; line-height: 40px; font-size:18px; ">
-                    Asia Pacific
-                </div>
-            </div>
-            <img src="map.png" alt="" usemap="#Map" id="mapimg" />
-                <map name="Map" id="Map">
-                    <area alt="" title="" id="na" href="#1" onclick="na1();" onmouseover="na();" onmouseleave="map();" shape="poly" coords="16,23,21,156,38,232,177,231,263,222,337,186,436,128,472,82,477,50,458,20,452,5" />
-                    <area alt="" title="" id="la" href="#2" onclick="la1();" onmouseover="la();" onmouseleave="map();" shape="poly" coords="65,234,76,374,91,555,182,574,333,571,367,534,396,428,404,375,406,322,400,284,385,241,373,200,386,210,389,226,392,240" />
-                    <area alt="" title="" id="ea" href="#3" onclick="ea1();" onmouseover="ea();" onmouseleave="map();" shape="poly" coords="528,43,442,185,430,273,468,345,535,427,578,501,627,514,689,474,717,425,731,353,732,286,753,237,780,199,812,166,832,141,854,129,865,114,872,109,904,105,929,105,951,103,971,107,998,112,1022,117,1059,114,1084,90,1087,63,1053,27,874,21,718,13" />
-                    <area alt="" title="" id="pa" href="#4" onclick="pa1();" onmouseover="pa();" onmouseleave="map();" shape="poly" coords="799,413,764,356,745,297,742,270,747,257,766,223,782,199,810,176,829,162,829,149,843,144,856,131,865,124,883,115,907,109,934,110,963,109,990,117,1018,122,1072,142,1106,207,1125,273,1136,342,1144,432,1130,523,1056,544,914,512" />
-                </map>
+        <div id="map-view" class='container' style="padding:5%;">
+    <div> 
+        <div class='dropdown-container' onmouseover="na();" onclick="na1();" id="nab" onmouseleave="map();">
+            North America <span style="text-align:right; margin-left:5%;" id="naplus">+</span>
+            <ul class="dropdown -left link-list -dark">
+
+            </ul>
         </div>
-            <script>
-                    var a = 0, b=0, c=0, d=0;
-                    function na(){
-                        document.getElementById("mapimg").src = "na.png";
-                        document.getElementById("nab").style.background = "black";
-                    }
-                     function na1(){
-                         if(a == 0){
-                            document.getElementById("nab1").style.display = "block";
-                            document.getElementById("lab1").style.display = "none";
-                            document.getElementById("eab1").style.display = "none";
-                            document.getElementById("pab1").style.display = "none";
-                            document.getElementById("laplus").innerHTML = "+";
-                            document.getElementById("eaplus").innerHTML = "+";
-                            document.getElementById("paplus").innerHTML = "+";
-                            document.getElementById("naplus").innerHTML = "-";
-                            a=1;
-                         }else{
-                            document.getElementById("nab1").style.display = "none";
-                            document.getElementById("naplus").innerHTML = "+";                            
-                            a=0;
-                         }
-                    }
-                    function la(){
-                        document.getElementById("mapimg").src = "la.png";
-                        document.getElementById("lab").style.background = "black";                        
-                    }
-                    function la1(){
-                         if(b == 0){
-                            document.getElementById("lab1").style.display = "block";
-                            document.getElementById("nab1").style.display = "none";
-                            document.getElementById("eab1").style.display = "none";
-                            document.getElementById("pab1").style.display = "none";
-                            document.getElementById("naplus").innerHTML = "+";
-                            document.getElementById("eaplus").innerHTML = "+";
-                            document.getElementById("paplus").innerHTML = "+";
-                            document.getElementById("laplus").innerHTML = "-";
-                            b=1;
-                         }else{
-                            document.getElementById("lab1").style.display = "none";
-                            document.getElementById("laplus").innerHTML = "+";                            
-                            b=0;
-                         }
-                    }
-                    function ea(){
-                        document.getElementById("eab").style.background = "black";
-                        document.getElementById("mapimg").src = "ea.png";
-                    }
-                    function ea1(){
-                         if(c == 0){
-                            document.getElementById("eab1").style.display = "block";
-                            document.getElementById("lab1").style.display = "none";
-                            document.getElementById("nab1").style.display = "none";
-                            document.getElementById("pab1").style.display = "none";
-                            document.getElementById("laplus").innerHTML = "+";
-                            document.getElementById("naplus").innerHTML = "+";
-                            document.getElementById("paplus").innerHTML = "+";
-                            document.getElementById("eaplus").innerHTML = "-";
-                            c=1;
-                         }else{
-                            document.getElementById("eab1").style.display = "none";
-                            document.getElementById("eaplus").innerHTML = "+";                            
-                            c=0;
-                         }
-                    }
-                    function pa(){
-                        document.getElementById("pab").style.background = "black";
-                        document.getElementById("mapimg").src = "pa.png";
-                    }
-                    function pa1(){
-                         if(d == 0){
-                            document.getElementById("pab1").style.display = "block";
-                            document.getElementById("lab1").style.display = "none";
-                            document.getElementById("eab1").style.display = "none";
-                            document.getElementById("nab1").style.display = "none";
-                            document.getElementById("laplus").innerHTML = "+";
-                            document.getElementById("eaplus").innerHTML = "+";
-                            document.getElementById("naplus").innerHTML = "+";
-                            document.getElementById("paplus").innerHTML = "-";
-                            d=1;
-                         }else{
-                            document.getElementById("pab1").style.display = "none";
-                            document.getElementById("paplus").innerHTML = "+";                            
-                            d=0;
-                         }
-                    }
-                    function map(){
-                        document.getElementById("nab").style.background = "grey";
-                        document.getElementById("lab").style.background = "grey";
-                        document.getElementById("eab").style.background = "grey";
-                        document.getElementById("pab").style.background = "grey";
-                        document.getElementById("mapimg").src = "map.png";
-                    }
-            </script>
-    </body>
+        <div class='dropdown-container' onmouseover="la();" onclick="la1();" id="lab" onmouseleave="map();">
+            Latin America <span style="text-align:right; margin-left:5%;" id="laplus">+</span>
+            <ul class="dropdown -left link-list -dark">
+                
+            </ul>
+        </div>
+        <div class='dropdown-container' onmouseover="ea();" onclick="ea1();" id="eab" onmouseleave="map();">
+            EMEA <span style="text-align:right; margin-left:5%;" id="eaplus">+</span>
+            <ul class="dropdown -left link-list -dark">
+                
+            </ul>
+        </div>
+        <div class='dropdown-container' onmouseover="pa();" onclick="pa1();" id="aab" onmouseleave="map();">
+            Asia Pacific <span style="text-align:right; margin-left:5%;" id="paplus">+</span>
+            <ul class="dropdown -left link-list -dark">
+                
+            </ul>
+        </div>
+    </div>
+    <img src="Map_Bg.svg" alt="" usemap="#Map" id="mapimg" />
+    <div class="container">
+        <map name="Map" id="Map">
+            <area alt="" title="" id="na" href="#1" onclick="na1();" onmouseover="na();" onmouseleave="map();" shape="poly" coords="16,23,21,156,38,232,177,231,263,222,337,186,436,128,472,82,477,50,458,20,452,5" />
+            <area alt="" title="" id="la" href="#2" onclick="la1();" onmouseover="la();" onmouseleave="map();" shape="poly" coords="65,234,76,374,91,555,182,574,333,571,367,534,396,428,404,375,406,322,400,284,385,241,373,200,386,210,389,226,392,240" />
+            <area alt="" title="" id="ea" href="#3" onclick="ea1();" onmouseover="ea();" onmouseleave="map();" shape="poly" coords="528,43,442,185,430,273,468,345,535,427,578,501,627,514,689,474,717,425,731,353,732,286,753,237,780,199,812,166,832,141,854,129,865,114,872,109,904,105,929,105,951,103,971,107,998,112,1022,117,1059,114,1084,90,1087,63,1053,27,874,21,718,13" />
+            <area alt="" title="" id="pa" href="#4" onclick="pa1();" onmouseover="pa();" onmouseleave="map();" shape="poly" coords="799,413,764,356,745,297,742,270,747,257,766,223,782,199,810,176,829,162,829,149,843,144,856,131,865,124,883,115,907,109,934,110,963,109,990,117,1018,122,1072,142,1106,207,1125,273,1136,342,1144,432,1130,523,1056,544,914,512" />
+        </map> 
+    </div>
+</div>
+
+<div id="location-view" class='container'>
+    <h1>Our Locations</h1>
+    <hr>
+    <div class="wrapper">
+        <div class="facet-status-container">
+            <strong>
+                <span class="fade-on-change -down count"></span> 
+                Locations
+            </strong>
+            <ul class="inline-list">
+                <li>
+                    <button type="button" class="button-small facet-toggler">
+                        Filter
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row region-ap">
+        <div class="col-md-6">
+            <div class="smallscreen-stackable">
+                <hgroup>
+                    <h4>Asia Pacific</h4>
+                </hgroup>
+            </div>
+            <ul class="link-list light -cta">
+            </ul>
+        </div>
+    </div>
+    <div class="row region-emea">
+        <div class="col-md-6">
+            <div class="smallscreen-stackable">
+                <hgroup>
+                    <h4>Europe, Middle East, Africa (EMEA)</h4>
+                </hgroup>
+            </div>
+            <ul class="link-list light -cta">
+            </ul>
+        </div>
+    </div>
+    <div class="row region-la">
+        <div class="col-md-6">
+            <div class="smallscreen-stackable">
+                <hgroup>
+                    <h4>Latin America (LATAM)</h4>
+                </hgroup>
+            </div>
+            <ul class="link-list light -cta">
+            </ul>
+        </div>
+    </div>
+    <div class="row region-na">
+        <div class="col-md-6">
+            <div class="smallscreen-stackable">
+                <hgroup>
+                    <h4>North America</h4>
+                </hgroup>
+            </div>
+            <ul class="link-list light -cta">
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="country-view" class='container'>
+    <h1>Locations - <span></span></h1>
+    <hr>
+    <div class="back"><button>Back</button></div>
+    <div class="corporate">
+        <h1>Corporate</h1>
+        <br>
+        ul
+        <p class="company">Natixis Global Asset Management, L.P.</p>
+        <p class="address">Managed Portfolio Advisors®<\/sup>\r\nActive Index AdvisorsSM<\/sup>\r\n101 Second Street\r\nSuite 1600\r\nSan Francisco, CA 94105</p>
+        Tel <i class="icon icon-tel">+1 617-449-2100</i>
+        <br>
+        Fax <a class="icon-phone" href="tel:(800) 458-7452">(800) 458-7452</a>
+        <br>
+        <div class="contact"><a href=""></a></div>
+        <p class="map"><a href="http://maps.google.com/?q=">View map </a></p>
+    </div>
+</div>
+<br/>
+    <script>
+            var a = 0, b = 0, c = 0, d = 0;
+var cached_data = new Array();
+var dla,demea,dap,dna;
+var path = '/location_data.json';
+    function na() {
+        document.getElementById("mapimg").src = "Map_1.svg";
+    }
+    function na1() {
+        if (a == 0) {
+            document.getElementById("laplus").innerHTML = "+";
+            document.getElementById("eaplus").innerHTML = "+";
+            document.getElementById("paplus").innerHTML = "+";
+            document.getElementById("naplus").innerHTML = "-";
+            a = 1;
+        } else {
+            // document.getElementById("northamerica").style.display = "none";
+            document.getElementById("naplus").innerHTML = "+";
+            a = 0;
+        }
+    }
+    function la() {
+        document.getElementById("mapimg").src = "Map_2.svg";
+    }
+    function la1() {
+        if (b == 0) {
+            document.getElementById("naplus").innerHTML = "+";
+            document.getElementById("eaplus").innerHTML = "+";
+            document.getElementById("paplus").innerHTML = "+";
+            document.getElementById("laplus").innerHTML = "-";
+            b = 1;
+        } else {
+            // document.getElementById("latinamerica").style.display = "none";
+            document.getElementById("laplus").innerHTML = "+";
+            b = 0;
+        }
+    }
+    function ea() {
+        document.getElementById("mapimg").src = "Map_3.svg";
+    }
+    function ea1() {
+        if (c == 0) {
+            document.getElementById("laplus").innerHTML = "+";
+            document.getElementById("naplus").innerHTML = "+";
+            document.getElementById("paplus").innerHTML = "+";
+            document.getElementById("eaplus").innerHTML = "-";
+            c = 1;
+        } else {
+            // document.getElementById("emea").style.display = "none";
+            document.getElementById("eaplus").innerHTML = "+";
+            c = 0;
+        }
+    }
+    function pa() {
+        document.getElementById("mapimg").src = "Map_4.svg";
+    }
+    function pa1() {
+        if (d == 0) {
+            document.getElementById("laplus").innerHTML = "+";
+            document.getElementById("eaplus").innerHTML = "+";
+            document.getElementById("naplus").innerHTML = "+";
+            document.getElementById("paplus").innerHTML = "-";
+            d = 1;
+        } else {
+            // document.getElementById("asiapacific").style.display = "none";
+            document.getElementById("paplus").innerHTML = "+";
+            d = 0;
+        }
+    }
+    function map() {
+        document.getElementById("mapimg").src = "Map_Bg.svg";
+    }
+    function populateCountry(region, data){
+        string = '';
+        $.each(data,function(i,country){
+            string += '<li><a target="_blank" href="">' + country['country'] + '</a></li>'
+        })
+        $('.region-'+region + ' ul').html(string);
+        console.log(region.split('')[0],data);
+        $('#'+region.split('')[0]+'ab ul').html(string);
+    }
+    function populateOffices(country,data){
+        string = '';
+        $.each(data,function(i,office){
+            string += '<li><a target="_blank" href="" class="icon-download-xml resource">' + country['country'] + '</a></li>'
+        })
+        $('.region-'+region + ' ul').html(string);
+    }
+    function filterData(key,value,data){
+        return $.grep(data, function(e){ return (e[key] == value) })
+    }
+    setTimeout(function(){
+        $(document).ready(function () {
+            if (cached_data.length == 0){
+                $.getJSON(path,function(pdata){
+                    cached_data = pdata;
+                    $('.count').html(cached_data.length);
+                    dla = filterData('region', 'Latin America', cached_data);
+                    dna = filterData('region', 'North America', cached_data);
+                    demea = filterData('region', 'EMEA', cached_data);
+                    dap = filterData('region', 'Asia Pacific', cached_data);
+                    populateCountry('ap', dap);
+                    populateCountry('la', dla);
+                    populateCountry('na', dna);
+                    populateCountry('emea', demea);
+                })
+            }
+        });
+    },300)
+</script>
+</body>
 
 </html>

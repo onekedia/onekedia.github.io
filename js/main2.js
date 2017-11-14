@@ -1,13 +1,14 @@
 var date = new Date;
 var setYear = true;
 var cusip=543487854;
-var monthStart=1;
+var monthStart=date.getMonth();
 var monthEnd=date.getMonth();
 var yearStart=2015;
 var yearEnd= date.getFullYear();
-var query='path';
+var query='path1';
 var fundInvestment='10000';
 var chart;
+var cached_data = new Array();
 var options = {
 	'query': query,
 	'cusip': cusip,
@@ -55,7 +56,22 @@ var options = {
 		}
 		return max;
 	}
-
+	function set_dates(){
+		$('#start-month,#end-month').on('change', function(){
+			var sm = $('#start-month').val();
+			var sy = $('#start-year').val();
+			var em = $('#end-month').val();
+			var ey = $('#end-year').val();
+			check_start_month = cached_data.getIndexBy("monthEndDate", (sy+'-'+getDigit(sm)));
+			check_end_month = cached_data.getIndexBy("monthEndDate", (ey+'-'+getDigit(em)));
+			if (check_start_month == -1) {
+				$('#start-month').val(Highcharts.dateFormat('%m', new Date(Date.parse(cached_data[0]['monthEndDate']))));
+			}
+			if (check_end_month == -1) {
+				$('#end-month').val(Highcharts.dateFormat('%m', new Date(Date.parse(cached_data[cached_data.length-1]['monthEndDate']))));
+			}
+		})
+	}
 	function getMin(arr, prop) {
 		var min;
 		for (var i=0 ; i<arr.length ; i++) {
@@ -64,25 +80,76 @@ var options = {
 		}
 		return min;
 	}
+
+	Array.prototype.getIndexBy = function (name, value) {
+	    for (var i = 0; i < this.length; i++) {
+	        if (this[i][name].indexOf(value) != -1 ) {
+	            return i;
+	        }
+	    }
+	    return -1;
+	}
+	var getDigit = function (value) {
+		if (value.toString().length == 1) {
+            value = "0" + value;
+        }
+        return value
+	}
+	function getChartDataReady(data,sm,sy,em,ey,options){
+		var data = cached_data;
+		console.log('start',data.length);
+		var data_length = data.length;
+		sp = data.getIndexBy("monthEndDate", (sy+'-'+getDigit(sm)));
+		for (var i = 0; i < sp; i++){
+			if (data.getIndexBy("monthEndDate", (sy+'-'+getDigit(sm))) != 0 ){
+				// console.log('shift',data);
+				data.shift();
+			}
+		}
+		console.log('before',data.length);
+		ep = data.getIndexBy("monthEndDate", (ey+'-'+getDigit(em)));
+		for (var i = (ep+1); i < data_length; i++){
+			if (data.getIndexBy("monthEndDate", (ey+'-'+getDigit(em))) != (data.length-1)){
+				// console.log('pop',data);
+				data.pop();
+			}
+		}
+		console.log('after',data.length);
+		data[0]['meFund'] = '0.00';
+		// console.log(data);
+		var fund_data = new Array();
+		var fund_value = parseInt(options['fundInvestment']);
+		$.each(data,function(i,year){
+			c_month_fund = (year['meFund']/ 100) * parseInt(fund_value);
+            fund_value = fund_value + Math.round(c_month_fund);
+			fund_data.push(new Array(Date.parse(year['monthEndDate']), fund_value));
+		});
+		return fund_data
+	}
+
+	function filterData(jdata,options){
+		var data = jdata;
+		var sm = $('#start-month').val();
+		var sy = $('#start-year').val();
+		var em = $('#end-month').val();
+		var ey = $('#end-year').val();
+		fund_data = getChartDataReady(data,sm,sy,em,ey,options);
+		console.log(fund_data.length);
+		$('#fund-val').html("$"+(fund_data[fund_data.length-1][1]+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+		options['fundMaxRange'] = getMax(fund_data,'1')[1];
+		options['fundMinRange'] = getMin(fund_data,'1')[1];
+		highchart(fund_data,options);
+	}
 	// populate stock data
 	function getStockData(path,options){
 		var data = new Array();
-		if (data.length == 0){
-			$.getJSON(path,function(data){
-			// }).error(function(){
-				// console.log('nothing found');
-				// set date available
-				date_available = Highcharts.dateFormat('%b %d, %Y', new Date(Date.parse(data[0]['monthEndDate'])));
+		if (cached_data.length == 0){
+			$.getJSON(path,function(pdata){
+				cached_data = pdata;
+				date_available = Highcharts.dateFormat('%b %d, %Y', new Date(Date.parse(pdata[0]['monthEndDate'])));
 				$('.fund-start-date').html(date_available);
 				year_array = [];
-				var fund_data = new Array();
-				// fund_data.push(new Array( new Date(Date.parse(data[0]['monthEndDate'].split(' ')[0])) ,options['fundInvestment']));
-
-				var fund_value = parseInt(options['fundInvestment']);
-				$.each(data,function(i,year){
-					c_month_fund = (year['meFund']/ 100) * parseInt(fund_value);
-					fund_value = fund_value + Math.round(c_month_fund);
-					fund_data.push(new Array(Date.parse(year['monthEndDate']), fund_value));
+				$.each(pdata,function(i,year){
 					year_array.push((new Date(Date.parse(year['monthEndDate']))).getFullYear());
 				});
 				// set year dropdown
@@ -91,16 +158,15 @@ var options = {
 					setYear = false;
 					$('#end-year').val(year_array[year_array.length -1]);
 				}
-				$('#fundName').html(data[0]['fundName']);
-				$('#fund-val').html("$"+(fund_data[fund_data.length-1][1]+"").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
-				options['fundMaxRange'] = getMax(fund_data,'1')[1];
-				options['fundMinRange'] = getMin(fund_data,'1')[1];
-				highchart(fund_data,options);
-			}).complete(function(){
-				// data = data;
-			// 	$('#loading-image').hide();
-			// 	$('.chart').css('opacity', 1);
+				$('#fundName').html(pdata[0]['fundName']);
+				console.log(pdata);
+				set_dates()
+				filterData(cached_data,options);
 			});
+		}
+		else{
+			console.log('else',cached_data);
+			filterData(cached_data,options);
 		}
 	}
 	// query path function
@@ -159,13 +225,13 @@ var options = {
 				series: {
 					lineWidth: 3,
 					states: {
-						hover: {
-							enabled: true,
-							halo: {
-								size: 0
-							}
-						}
-					}
+			            hover: {
+			                enabled: true,
+			                halo: {
+			                    size: 0
+			                }
+			            }
+			        }
 				}
 			},
 			rangeSelector: {
@@ -207,11 +273,11 @@ var options = {
 				opposite: false,
 				labels: {
 					formatter: function(){
-
 						return "$" + (this.value + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");//((this.value)/1000).toString() + ',000';
 					}
 				},
-				showFirstLabel: true
+				showFirstLabel: true,
+				showLastLabel: true
 			},{
 				linkedTo: 0,
 				opposite: true,
@@ -268,10 +334,10 @@ var options = {
 					type: 'area',
 					fillOpacity: 0.15,
 					marker: {
-						lineWidth: 3,
-						lineColor: '#643488',
+            			lineWidth: 3,
+            			lineColor: '#643488',
 						fillColor: '#fff',
-						radius: 6
+            			radius: 6
 						// symbol: 'circle',
 					},
 					showInNavigator: true,
@@ -287,102 +353,102 @@ var options = {
 				// 	marker: {
 				// 		fillColor: '#fff',
 				// 		symbol: 'circle',
-				// 		lineColor: '#00B5CC',
-				// 		lineWidth: 3
+    //         			lineColor: '#00B5CC',
+    //         			lineWidth: 3
 				// 	},
 				// 	showInNavigator: true,
 				// 	zIndex: 1
 				// }
 			],
 			navigator: {
-				maskFill: 'rgba(239,239,239,0.45)',
-				series: [{
-					type: 'areaspline',
-					color: '#643488',
-					fillOpacity: 0.4,
-					dataGrouping: {
-						smoothed: false
-					},
-					lineWidth: 2,
-					lineColor: '#643488',
-					fillOpacity: 0.15,
-					marker: {
-						enabled: false
-					},
-					shadow: true
-				},
-				{
-					type: 'areaspline',
-					color: '#00B5CC',
-					fillOpacity: 0.4,
-					dataGrouping: {
-						smoothed: false
-					},
-					lineWidth: 2,
-					lineColor: '#00B5CC',
-					fillOpacity: 0.15,
-					marker: {
-						enabled: false
-					},
-					shadow: true
-				}
-				]
+			    maskFill: 'rgba(239,239,239,0.45)',
+			    series: [{
+			        type: 'areaspline',
+			        color: '#643488',
+			        fillOpacity: 0.4,
+			        dataGrouping: {
+			            smoothed: false
+			        },
+			        lineWidth: 2,
+			        lineColor: '#643488',
+			        fillOpacity: 0.15,
+			        marker: {
+			            enabled: false
+			        },
+			        shadow: true
+			    },
+			    {
+			        type: 'areaspline',
+			        color: '#00B5CC',
+			        fillOpacity: 0.4,
+			        dataGrouping: {
+			            smoothed: false
+			        },
+			        lineWidth: 2,
+			        lineColor: '#00B5CC',
+			        fillOpacity: 0.15,
+			        marker: {
+			            enabled: false
+			        },
+			        shadow: true
+			    }
+			    ]
 			},
 			dataLabels: {
-				style: {
-					fontFamily: '\'kabelblack\'',
-				}
-			},
+            	style: {
+               		fontFamily: '\'kabelblack\'',
+               	}
+            },
 			responsive: {
-				rules: [{
-					condition: {
-						maxWidth: 500
-					},
-					chartOptions: {
-						chart: {
-							height: 300
-						},
-						subtitle: {
-							text: null
-						},
-						navigator: {
-							enabled: false
-						}
-					}
-				},{
-					condition: {
-						maxWidth: 800
-					},
-					chartOptions: {
-						chart: {
-							height: 400
-						},
-						subtitle: {
-							text: null
-						},
-						navigator: {
-							enabled: true
-						}
-					}
-				},
-				{
-					condition: {
-						maxWidth: 1400
-					},
-					chartOptions: {
-						chart: {
-							height: 400
-						},
-						subtitle: {
-							text: null
-						},
-						navigator: {
-							enabled: true
-						}
-					}
-				}
-				]
-			}
+	            rules: [{
+	                condition: {
+	                    maxWidth: 500
+	                },
+	                chartOptions: {
+	                    chart: {
+	                        height: 300
+	                    },
+	                    subtitle: {
+	                        text: null
+	                    },
+	                    navigator: {
+	                        enabled: false
+	                    }
+	                }
+	            },{
+	                condition: {
+	                    maxWidth: 800
+	                },
+	                chartOptions: {
+	                    chart: {
+	                        height: 400
+	                    },
+	                    subtitle: {
+	                        text: null
+	                    },
+	                    navigator: {
+	                        enabled: true
+	                    }
+	                }
+	            },
+	            {
+	                condition: {
+	                    maxWidth: 1400
+	                },
+	                chartOptions: {
+	                    chart: {
+	                        height: 400
+	                    },
+	                    subtitle: {
+	                        text: null
+	                    },
+	                    navigator: {
+	                        enabled: true
+	                    }
+	                }
+	            }
+	            ]
+	        }
 		});
 		if(500 >= $(document).width()){
 			chart.setSize(null);

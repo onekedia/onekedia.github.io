@@ -1,0 +1,60 @@
+[
+	{
+		"id" : "3",
+		"region" : "North America",
+		"country" : "United States",
+		"company" : "Natixis Global Asset Management",
+		"address" : "Managed Portfolio Advisors®<\/sup>\r\nActive Index AdvisorsSM<\/sup>\r\n101 Second Street\r\nSuite 1600\r\nSan Francisco, CA 94105",
+		"phone" : "(866) 773-2454",
+		"fax" : "",
+		"contact_link" : "test",
+		"map_link" : "101 Second Street, San Francisco, CA 94105"
+	},
+	{
+		"id" : "24",
+		"region" : "EMEA",
+		"country" : "France",
+		"company" : "Natixis Global Asset Management, S.A.",
+		"address" : "21 quai d'Austerlitz\r\n75634 Paris Cedex 13 - France",
+		"phone" : "33 (0) 1 78 40 90 00",
+		"fax" : "33 (0) 1 78 40 65 00",
+		"contact_link" : "test",
+		"map_link" : "http:\/\/maps.google.com\/?q=21%20quai%20d%27Austerlitz%2075634%20Paris%20Cedex%2013%20-%20France"
+	},
+	{
+		"id":"6",
+		"region":"Latin America",
+		"na_country":"1",
+		"la_country":"Colombia",
+		"emea_country":"1",
+		"ap_country":"1",
+		"company":"",
+		"address":"",
+		"phone":"(800) 862-4863",
+		"fax":"",
+		"contact_link":"",
+		"map_link":""
+	},
+	{
+		"id":"5",
+		"region":"EMEA",
+		"country":"France",
+		"company":"",
+		"address":"",
+		"phone":"1 617-449-2525",
+		"fax":"",
+		"contact_link":"",
+		"map_link":""
+	},
+	{
+		"id":"4",
+		"region":"Asia Pacific",
+		"country":"Hong Kong",
+		"company":"HK",
+		"address":"For all account types (excluding SIMPLE IRAs)",
+		"phone":"222-333-4444",
+		"fax":"333-444-5555",
+		"contact_link":"http:\/\/testhk.org\/contactUs",
+		"map_link":"330 West 9th Street Kansas City, MO 64105-1514"
+	}
+]
